@@ -1,46 +1,44 @@
-function getCharts()
+function getCharts(type)
 {
-    // var items = $('#jqxTree').jqxTree('getCheckedItems');
-    // var dataTmp = [];
+    var link = "http://" + window.location.hostname + "/FER/";
 
-    // for (var i = 0; i < items.length; i++) {
-    //    var item = items[i];
-    //    dataTmp[i] = item.value;
-    // }
+    var items = $('#'+ type +'Topo').jqxTree('getCheckedItems');
+    var localisations = [];
 
+    for (var i = 0; i < items.length; i++) {
+       var item = items[i];
+       localisations[i] = item.value;
+    }
 
-    // $.ajax({
-    //     type: "POST",
-    //     url: link + 'Main/getHistograms/',
-    //     data: { localisations: [],
-    //             startTime: '23/11/2016 06:00:00',
-    //             endTime: '23/11/2016 14:00:00'
-    //     },
-    //     error: function( jqXHR, textStatus, errorThrown ) {
-    //         alert('error status: ' + textStatus + " - thrown: " + errorThrown);
-    //     },
-    //     success: function(result) {
-    //         if (result.success == true) {
-    //             var mainDiv = document.getElementById("mainGrafPanel");
+    $.ajax({
+        type: "POST",
+        url: link + 'models/getHistograms',
+        data: { localisations: localisations,
+                startTime: '23/11/2016 06:00:00',
+                endTime: '23/11/2016 14:00:00'
+        },
+        error: function( jqXHR, textStatus, errorThrown ) {
+            alert('error status: ' + textStatus + " - thrown: " + errorThrown);
+        },
+        success: function(result) {
+            if (result.success == true) {
+                var mainDiv = document.getElementById("mainGrafPanel");
 
-    //             var arrayLength = result.data.length;
+                var arrayLength = result.data.length;
 
-    //             for (var i = 0; i < arrayLength; i++) {
-    //                 var name = result.data[i].ilotName;
-    //                 var histData = result.data[i].histData;
+                for (var i = 0; i < arrayLength; i++) {
+                    var name = result.data[i].ilotName;
+                    var histData = result.data[i].histData;
 
-    //                 // var div = document.createElement('div');
-    //                 // div.className = 'list-group-item';
-    //                 // div.innerHTML = getChartTemplate(i);
+                    var chartID = 'tcy_' + i;
+                    $('#mainGrafPanel').append(getChartTemplate(chartID));
 
-    //                 $('#mainGrafPanel').append(getChartTemplate(i));
-
-    //                 addTcyChart(name, histData, i);
-    //             }
-    //         }
-    //     },
-    //     dataType: 'json'
-    // });
+                    addTcyChart(name, histData, chartID);
+                }
+            }
+        },
+        dataType: 'json'
+    });
 
 
     // remData = {
@@ -123,7 +121,7 @@ function addTcyChart(location, data, id) {
         barmode: "group"
     };
 
-    Plotly.newPlot('tcyChart_' + id, data, layout);
+    Plotly.newPlot(id, data, layout);
 }
 
 
@@ -142,11 +140,11 @@ function addCnvChart(location, data, id) {
         type: 'scatter'
     };
 
-    Plotly.newPlot('tcyChart_' + id, [data]);
+    Plotly.newPlot(id, [data]);
 }
 
 
 function getChartTemplate(id) {
-    var element = '<div class="graf-kontainer"><div id="tcyChart_' + id + '" class="graf"></div><div class="pareto"></div></div>';
+    var element = '<div class="graf-kontainer"><div class="graf"><div id="' + id + '" class="telografu"></div></div><div class="pareto"></div></div>';
     return element;
 }
