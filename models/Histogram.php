@@ -23,7 +23,7 @@ class Histogram
     {
         $tcyVals = $this->getTcy($startTime, $endTime);
         if (count($tcyVals) < 1) {
-            return $result;
+            return array('0' => 0);
         }
 
         $tcyValsFiltered = $this->removeOutliers($tcyVals);

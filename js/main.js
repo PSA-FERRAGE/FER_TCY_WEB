@@ -9,10 +9,10 @@ $(document).ready(function () {
         {
             $('.graf-kontainer').remove();
             
-            var activeTab = $('#topoTab li.active a');
-            var type = activeTab.data('type');
+            var type = $('#topoTab li.active').data('type');
+            var viewType = $('#searchTab li.active').data('type');
 
-            getCharts(type);
+            getCharts(type, viewType);
         }
     });
 
@@ -51,8 +51,6 @@ $(document).ready(function () {
             singleDatePicker: true,
             showWeekNumbers: true,
             showISOWeekNumbers: true,
-            timePicker: true,
-            timePicker24Hour: true,
             autoUpdateInput: true,
             autoApply: true,
             locale: {
@@ -65,13 +63,28 @@ $(document).ready(function () {
                             "Júl", "August", "September", "Október", "November", "December"],
             }
         }, function(start, end, label) {
-            console.log("New date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD'));
+            var viewType = $('#searchTab li.active').data('type');
+
+            switch (viewType) {
+                case 'shift':
+                    $('#shiftStartTime').val(start.format('DD/MM/YYYY'));
+                    break;
+                case 'day':
+                    $('#dayStartTime').val(start.format('DD/MM/YYYY'));
+                    break;
+                case 'week':
+                    $('#weekStartTime').val(start.format('DD/MM/YYYY'));
+                    $('#tyzdenNum').text(moment($('#weekStartTime').val(), 'DD/MM/YYYY').isoWeek());
+                    break;
+                default:
+                    break;
+            }
     });
 
 
     $('#timeRngBtn').on('apply.daterangepicker', function(ev, picker) {
-        $('#startTimeIn').val(picker.startDate.format('DD/MM/YYYY HH:mm:ss'));
-        $('#endTimeIn').val(picker.endDate.format('DD/MM/YYYY HH:mm:ss'));
+        $('#rawStartTime').val(picker.startDate.format('DD/MM/YYYY HH:mm:ss'));
+        $('#rawEndTime').val(picker.endDate.format('DD/MM/YYYY HH:mm:ss'));
     });
 
     function getTimeInterval(type, isStart)

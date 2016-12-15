@@ -1,4 +1,4 @@
-function getCharts(type)
+function getCharts(type, viewType)
 {
     var link = "http://" + window.location.hostname + "/FER/";
 
@@ -6,16 +6,58 @@ function getCharts(type)
     var localisations = [];
 
     for (var i = 0; i < items.length; i++) {
-       var item = items[i];
-       localisations[i] = item.value;
+    var item = items[i];
+    localisations[i] = item.value;
     }
+
+    var startTime;
+    var endTime;
+
+    switch (viewType) {
+        case 'raw':
+            startTime = $('#rawStartTime').val();
+            endTime = $('#rawEndTime').val();
+            break;
+        case 'shift':
+            var time = $('#shiftStartTime').val();
+
+            switch ($('#shiftSelect').val()) {
+                case 'ranna':
+                    startTime = moment(time, 'DD/MM/YYYY').add(6, 'hour').format('DD/MM/YYYY HH:mm:ss');
+                    endTime = moment(time, 'DD/MM/YYYY').add(14, 'hour').format('DD/MM/YYYY HH:mm:ss');
+                    break;
+                case 'poobedna':
+                    startTime = moment(time, 'DD/MM/YYYY').add(14, 'hour').format('DD/MM/YYYY HH:mm:ss');
+                    endTime = moment(time, 'DD/MM/YYYY').add(22, 'hour').format('DD/MM/YYYY HH:mm:ss');
+                    break;
+                case 'nocna':
+                    startTime = moment(time, 'DD/MM/YYYY').add(22, 'hour').format('DD/MM/YYYY HH:mm:ss');
+                    endTime = moment(time, 'DD/MM/YYYY').add(30, 'hour').format('DD/MM/YYYY HH:mm:ss');
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 'day':
+            var time = $('#dayStartTime').val();
+
+            startTime = moment(time, 'DD/MM/YYYY').add(6, 'hour').format('DD/MM/YYYY HH:mm:ss');
+            endTime = moment(time, 'DD/MM/YYYY').add(30, 'hour').format('DD/MM/YYYY HH:mm:ss');
+            break;
+        case 'week':
+
+            break;
+        default:
+            break;
+    }
+
 
     $.ajax({
         type: "POST",
         url: link + 'models/getHistograms',
         data: { localisations: localisations,
-                startTime: '23/11/2016 06:00:00',
-                endTime: '23/11/2016 14:00:00'
+                startTime: startTime,
+                endTime: endTime
         },
         error: function( jqXHR, textStatus, errorThrown ) {
             alert('error status: ' + textStatus + " - thrown: " + errorThrown);
@@ -46,7 +88,7 @@ function getCharts(type)
     //     data: [["23/11/2016 06:02:55", 28], ["23/11/2016 06:03:40", 27], ["23/11/2016 06:05:55", 28]]
     // };
 
-    
+
     // $.ajax({
     //     type: "POST",
     //     url: link + 'Main/getConveyors/',
@@ -116,6 +158,7 @@ function addTcyChart(location, data, id) {
 
     var data = [tcy];
     var layout = {
+        title: location,
         bargap: 0.0,
         bargroupgap: 0.0,
         barmode: "group"

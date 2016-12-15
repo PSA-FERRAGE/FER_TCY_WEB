@@ -32,6 +32,10 @@
             position: static;
         }
 
+        .btn-group > .btn {
+            position: static;
+        }
+
         .irs-slider {
             display: none;
         }
@@ -52,16 +56,16 @@
             <div class="cas">
                 <div class="sidebarNadpis">Výber časového ohraničenia</div>
                 <ul id="searchTab" class="nav nav-tabs" role="tablist">
-                    <li class="nav-item" data-tab-num="1">
-                        <a class="nav-link active" data-toggle="tab" href="#rawTab" role="tab">RAW</a>
+                    <li class="nav-item" data-type="raw">
+                        <a class="nav-link" data-toggle="tab" href="#rawTab" role="tab">RAW</a>
                     </li>
-                    <li class="nav-item" data-tab-num="2">
+                    <li class="nav-item" data-type="shift">
                         <a class="nav-link" data-toggle="tab" href="#shiftTab" role="tab">Zmena</a>
                     </li>
-                    <li class="nav-item" data-tab-num="3">
+                    <li class="nav-item" data-type="day">
                         <a class="nav-link" data-toggle="tab" href="#dayTab" role="tab">Deň</a>
                     </li>
-                    <li class="nav-item" data-tab-num="4">
+                    <li class="nav-item" data-type="week">
                         <a class="nav-link" data-toggle="tab" href="#weekTab" role="tab">Týždeň</a>
                     </li>
                 </ul>
@@ -74,8 +78,8 @@
                                     <i class="glyphicon glyphicon-calendar"></i>
                                 </button>
                             </span>
-                            <input id="startTimeIn" class="form-control myDatePicker" type="text" placeholder="Dátum od" disabled/>
-                            <input id="endTimeIn" class="form-control myDatePicker" type="text" placeholder="Dátum do" disabled/>
+                            <input id="rawStartTime" class="form-control myDatePicker" type="text" placeholder="Dátum od" disabled/>
+                            <input id="rawEndTime" class="form-control myDatePicker" type="text" placeholder="Dátum do" disabled/>
                         </div>
                         <input class="tcyPicker" type="text" value="" />
                     </div>
@@ -86,12 +90,12 @@
                                     <i class="glyphicon glyphicon-calendar"></i>
                                 </button>
                             </span>
-                            <input id="startTimeIn" class="form-control myDatePicker" type="text" placeholder="Dátum" disabled/>
+                            <input id="shiftStartTime" class="form-control myDatePicker" type="text" placeholder="Dátum" disabled/>
                         </div>
-                        <select class="selectpicker">
-                            <option>Ranná</option>
-                            <option>Poobedná</option>
-                            <option>Nočná</option>
+                        <select id="shiftSelect" class="selectpicker">
+                            <option value='ranna'>Ranná</option>
+                            <option value='poobedna'>Poobedná</option>
+                            <option value='nocna'>Nočná</option>
                         </select>
                         <input class="tcyPicker" type="text" value="" />
                     </div>
@@ -102,7 +106,7 @@
                                     <i class="glyphicon glyphicon-calendar"></i>
                                 </button>
                             </span>
-                            <input id="startTimeIn" class="form-control myDatePicker" type="text" placeholder="Dátum" disabled/>
+                            <input id="dayStartTime" class="form-control myDatePicker" type="text" placeholder="Dátum" disabled/>
                         </div>
                         <input class="tcyPicker" type="text" value="" />
                     </div>
@@ -113,9 +117,9 @@
                                     <i class="glyphicon glyphicon-calendar"></i>
                                 </button>
                             </span>
-                            <input id="startTimeIn" class="form-control myDatePicker" type="text" placeholder="Dátum" disabled/>
+                            <input id="weekStartTime" class="form-control myDatePicker" type="text" placeholder="Dátum" disabled/>
                         </div>
-                        <p>Týždeň: <span id="tyzdenNum">50</span><p>
+                        <p>Týždeň: <span id="tyzdenNum"></span><p>
                         <input class="tcyPicker" type="text" value="" />
                     </div>
                 </div>
@@ -124,11 +128,11 @@
                 <div class="sidebarNadpis">Výber grafov podľa topologie</div>
                 <div class="topologia_pills">
                     <ul id="topoTab" class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#tcyTopo" role="tab" data-toggle="tab" data-type="tcy">Čas cyklu</a>
+                        <li class="nav-item" data-type="tcy">
+                            <a class="nav-link" href="#tcyTopo" role="tab" data-toggle="tab">Čas cyklu</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#cnvTopo" role="tab" data-toggle="tab"  data-type="cnv">Dopravníky</a>
+                        <li class="nav-item" data-type="cnv">
+                            <a class="nav-link" href="#cnvTopo" role="tab" data-toggle="tab">Dopravníky</a>
                         </li>   
                         <!--<li class="nav-item">
                             <a class="nav-link" href="#parTab" role="tab" data-toggle="tab"  data-type="par">Pareto</a>
@@ -136,7 +140,7 @@
                     </ul>
                 </div>
                 <div class="topologia_obsah tab-content">
-                    <div class="tab-pane active" id="tcyTopo" role="tabpanel"></div>
+                    <div class="tab-pane" id="tcyTopo" role="tabpanel"></div>
                     <div class="tab-pane" id="cnvTopo" role="tabpanel"></div>
                     <!--<div class="tab-pane" id="parTab" role="tabpanel"></div>-->
                 </div>
@@ -166,20 +170,32 @@
     <script src="js/daterangepicker.js" type="text/javascript"></script>
     <script src="js/ion.rangeSlider.js" type="text/javascript"></script>
     <script>
+        window.tcyLoaded = false;
+        window.cnvLoaded = false;
         // $('#treeTopology').jqxTree({hasThreeStates: true, checkboxes: true});
-
+// jqx-hideborder
         $("input.tcyPicker").ionRangeSlider({
             min: 1,
             max: 10
             // prefix: 'TCY'
         });
 
+
+        $('#topoTab a').click(function (e) {
+            e.preventDefault();
+
+            var type = $(this).parent().data('type');
+            if (window[type + 'Loaded'] == false) {
+                loadTree(type);
+                $('#'+type+'Topo').addClass('jqx-hideborder');
+                window[type + 'Loaded'] = true;
+            }
+            
+            $(this).tab('show');
+        });
+
         $('#searchTab a:first').tab('show');
-        $('#topoTab a:first').tab('show');
-
-        loadTree('tcy');
-        loadTree('cnv');
-
+        $('#topoTab a:first').click();
 
         function loadTree(type)
         {
@@ -187,9 +203,9 @@
                 return;
             }
 
-
             var link = "http://" + window.location.hostname + "/FER/";
             var fncLink = link + 'models/getTree';
+
 
             $.get(fncLink, {type: type}, function(data) {
                 var source = {
