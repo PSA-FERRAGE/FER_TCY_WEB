@@ -27,7 +27,7 @@ body {
   padding: 4px;
 }
 .sidebar > div:first-child {
-  border-bottom: 1px solid lightgrey;
+  //border-bottom: 1px solid lightgrey;
 }
 .sidebar .cas .popis {
   color: grey;
@@ -36,6 +36,19 @@ body {
   flex: 1;
 }
 
+.sidebarNadpis {
+  background-color: #ccc;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2EM;
+  padding: 2px 0px 2px 0px;
+  margin-bottom: 10px;
+}
+.sidebar .cas {
+  margin-bottom: 15px;
+}
+
+
 .content {
   background-color: #444;
   position: absolute;
@@ -43,11 +56,12 @@ body {
   left: 400px;
   right: 0;
   bottom: 0;
+  height: 200vh;
   -moz-transition: left 0.5s ease;
   transition: left 0.5s ease;
 }
 .content.isClosed {
-  left: 0px;
+  left: 8px;
 }
 
 .nadpis {
