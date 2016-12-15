@@ -47,6 +47,23 @@ body {
 .sidebar .cas {
   margin-bottom: 15px;
 }
+.nav-tabs{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.dayTab>{
+  margin: 5px 0px 5px 0px;
+}
+.nav-item{
+  font-weight: bold;
+}
+.btn-group > .btn{
+  position: static;
+}
+.jqx-widget-content{
+  //border: none;
+}
 
 
 .content {
