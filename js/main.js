@@ -2,8 +2,18 @@ $(document).ready(function () {
     var link = "http://" + window.location.hostname + "/FER/";
 
     $('#toggleSidebar').click(function() {
-        $( ".content" ).toggleClass( "isClosed" );
-        $( "#toggleSidebar" ).toggleClass( "active" );
+        $(".content").toggleClass("isClosed");
+        $("#toggleSidebar").toggleClass("active");
+
+        if ($( "#toggleSidebar").hasClass("active"))
+        {
+            $('.graf-kontainer').remove();
+            
+            var activeTab = $('#topoTab li.active a');
+            var type = activeTab.data('type');
+
+            getCharts(type);
+        }
     });
 
 
