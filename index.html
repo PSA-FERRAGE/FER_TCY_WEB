@@ -186,11 +186,6 @@
         loadTree('tcy');
         loadTree('cnv');
 
-        $('#toggleSidebar').click(function() {
-            $( ".content" ).toggleClass( "isClosed" );
-            $( "#toggleSidebar" ).toggleClass( "active" );
-        });
-
         // $('a[role="tab"]').on('shown.bs.tab', function (e) {
         //     e.target // newly activated tab
         //     e.relatedTarget // previous active tab
@@ -211,7 +206,7 @@
             }
 
 
-            var link = "http://" + window.location.hostname + "/FER_B/";
+            var link = "http://" + window.location.hostname + "/FER/";
             var fncLink = link + 'models/getTree';
 
             $.get(fncLink, {type: type}, function(data) {
@@ -252,6 +247,7 @@
         }
     </script>
     <script src="js/main.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="js/grafy.js?<?php echo time(); ?>" type="text/javascript"></script>
 </body>
 
 </html>

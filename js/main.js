@@ -1,15 +1,12 @@
 $(document).ready(function () {
-    var link = "http://" + window.location.hostname + "/FER_B/";
+    var link = "http://" + window.location.hostname + "/FER/";
 
-    $('#searchBtn').click(function() {
-        // $('.sidebar').toggle();
+    $('#toggleSidebar').click(function() {
+
+
+        $( ".content" ).toggleClass( "isClosed" );
+        $( "#toggleSidebar" ).toggleClass( "active" );
     });
-
-    // $('.sidebar').toggle(function () {
-    //     $(".sidebar").css({display: "none"});
-    // }, function () {
-    //     $(".sidebar").css({display: "flex"});
-    // });
 
 
     $('#timeRngBtn').daterangepicker({
@@ -68,50 +65,6 @@ $(document).ready(function () {
         $('#startTimeIn').val(picker.startDate.format('DD/MM/YYYY HH:mm:ss'));
         $('#endTimeIn').val(picker.endDate.format('DD/MM/YYYY HH:mm:ss'));
     });
-
-
-    $('button.treeBtn').click(
-        function() {
-            var fncLink = link + 'models/getTree';
-            var typeStr = $(this).data('type');
-
-            if (typeStr != 'tcy' && typeStr != 'cnv' && typeStr != 'par') {
-                return;
-            }
-
-            $.get(fncLink, {type: typeStr}, function(data) {
-                var source = {
-                    datatype: "json",
-                    datafields: [{ name: 'id' }, { name: 'parent_id' },
-                                 { name: 'nazov' }, { name: 'bo_id' }
-                                ],
-                    id: 'lokalizacia_id',
-                    localdata: data
-                };
-
-                // create data adapter.
-                var dataAdapter = new $.jqx.dataAdapter(source);
-                // perform Data Binding.
-                dataAdapter.dataBind();
-                // get the tree items. The first parameter is the item's id. The second parameter is the parent item's id. The 'items' parameter represents
-                // the sub items collection name. Each jqxTree item has a 'label' property, but in the JSON data, we have a 'text' field. The last parameter
-                // specifies the mapping between the 'text' and 'label' fields.
-                var records = dataAdapter.getRecordsHierarchy('id', 'parent_id', 'items', [{
-                    name: 'nazov',
-                    map: 'label'
-                }, {
-                    name: 'bo_id',
-                    map: 'value'
-                }]);
-
-                $('#treeTopology').jqxTree({ source: records });
-            }).fail(
-                function() {
-                    alert( "error" );
-            });
-        }
-    );
-
 
     function getTimeInterval(type, isStart)
     {
