@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var link = "http://" + window.location.hostname + "/FER_B/";
+    var link = "http://" + window.location.hostname + "/FER/";
 
     $('#searchBtn').click(function() {
         // $('.sidebar').toggle();
