@@ -36,6 +36,10 @@
             position: static;
         }
 
+        .irs {
+            margin-top: 5px;
+        }
+
         .irs-slider {
             display: none;
         }
@@ -90,7 +94,7 @@
                                     <i class="glyphicon glyphicon-calendar"></i>
                                 </button>
                             </span>
-                            <input id="shiftStartTime" class="form-control myDatePicker" type="text" placeholder="Dátum" disabled/>
+                            <input id="shiftStartTime" class="form-control myDatePicker singleDatePicker" type="text" placeholder="Dátum" disabled/>
                         </div>
                         <select id="shiftSelect" class="selectpicker">
                             <option value='ranna'>Ranná</option>
@@ -106,7 +110,7 @@
                                     <i class="glyphicon glyphicon-calendar"></i>
                                 </button>
                             </span>
-                            <input id="dayStartTime" class="form-control myDatePicker" type="text" placeholder="Dátum" disabled/>
+                            <input id="dayStartTime" class="form-control myDatePicker singleDatePicker" type="text" placeholder="Dátum" disabled/>
                         </div>
                         <input class="tcyPicker" type="text" value="" />
                     </div>
@@ -117,7 +121,7 @@
                                     <i class="glyphicon glyphicon-calendar"></i>
                                 </button>
                             </span>
-                            <input id="weekStartTime" class="form-control myDatePicker" type="text" placeholder="Dátum" disabled/>
+                            <input id="weekStartTime" class="form-control myDatePicker singleDatePicker" type="text" placeholder="Dátum" disabled/>
                         </div>
                         <p>Týždeň: <span id="tyzdenNum"></span><p>
                         <input class="tcyPicker" type="text" value="" />
@@ -134,15 +138,15 @@
                         <li class="nav-item" data-type="cnv">
                             <a class="nav-link" href="#cnvTopo" role="tab" data-toggle="tab">Dopravníky</a>
                         </li>   
-                        <!--<li class="nav-item">
-                            <a class="nav-link" href="#parTab" role="tab" data-toggle="tab"  data-type="par">Pareto</a>
-                        </li>-->
+                        <li class="nav-item" data-type="par">
+                            <a class="nav-link" href="#parTopo" role="tab" data-toggle="tab">Pareto</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="topologia_obsah tab-content">
                     <div class="tab-pane" id="tcyTopo" role="tabpanel"></div>
                     <div class="tab-pane" id="cnvTopo" role="tabpanel"></div>
-                    <!--<div class="tab-pane" id="parTab" role="tabpanel"></div>-->
+                    <div class="tab-pane" id="parTopo" role="tabpanel"></div>
                 </div>
             </div>
         </div>
@@ -172,6 +176,7 @@
     <script>
         window.tcyLoaded = false;
         window.cnvLoaded = false;
+        window.parLoaded = false;
         // $('#treeTopology').jqxTree({hasThreeStates: true, checkboxes: true});
 // jqx-hideborder
         $("input.tcyPicker").ionRangeSlider({
@@ -208,6 +213,14 @@
 
 
             $.get(fncLink, {type: type}, function(data) {
+                
+                // if (result.success == false) {
+                //     alert('Chyba pri nacitani stromu!');
+                //     return;
+                // }
+
+                // var data = result['data'];
+
                 var source = {
                     datatype: "json",
                     datafields: [{ name: 'id' }, { name: 'parent_id' },

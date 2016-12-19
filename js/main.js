@@ -62,23 +62,26 @@ $(document).ready(function () {
                 monthNames: ["Január", "Február", "Marec", "Apríl", "Máj", "Jún",
                             "Júl", "August", "September", "Október", "November", "December"],
             }
-        }, function(start, end, label) {
-            var viewType = $('#searchTab li.active').data('type');
+    });
 
-            switch (viewType) {
-                case 'shift':
-                    $('#shiftStartTime').val(start.format('DD/MM/YYYY'));
-                    break;
-                case 'day':
-                    $('#dayStartTime').val(start.format('DD/MM/YYYY'));
-                    break;
-                case 'week':
-                    $('#weekStartTime').val(start.format('DD/MM/YYYY'));
-                    $('#tyzdenNum').text(moment($('#weekStartTime').val(), 'DD/MM/YYYY').isoWeek());
-                    break;
-                default:
-                    break;
-            }
+
+    $('.singleTimeBtn').on('apply.daterangepicker', function(ev, picker) {
+        var viewType = $('#searchTab li.active').data('type');
+
+        switch (viewType) {
+            case 'shift':
+                $('#shiftStartTime').val(picker.startDate.format('DD/MM/YYYY'));
+                break;
+            case 'day':
+                $('#dayStartTime').val(picker.startDate.format('DD/MM/YYYY'));
+                break;
+            case 'week':
+                $('#weekStartTime').val(picker.startDate.format('DD/MM/YYYY'));
+                $('#tyzdenNum').text(moment($('#weekStartTime').val(), 'DD/MM/YYYY').isoWeek());
+                break;
+            default:
+                break;
+        }
     });
 
 
@@ -86,6 +89,7 @@ $(document).ready(function () {
         $('#rawStartTime').val(picker.startDate.format('DD/MM/YYYY HH:mm:ss'));
         $('#rawEndTime').val(picker.endDate.format('DD/MM/YYYY HH:mm:ss'));
     });
+
 
     function getTimeInterval(type, isStart)
     {

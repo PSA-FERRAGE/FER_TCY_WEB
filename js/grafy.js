@@ -1,13 +1,12 @@
-function getCharts(type, viewType)
-{
+function getCharts(type, viewType) {
     var link = "http://" + window.location.hostname + "/FER/";
 
-    var items = $('#'+ type +'Topo').jqxTree('getCheckedItems');
+    var items = $('#' + type + 'Topo').jqxTree('getCheckedItems');
     var localisations = [];
 
     for (var i = 0; i < items.length; i++) {
-    var item = items[i];
-    localisations[i] = item.value;
+        var item = items[i];
+        localisations[i] = item.value;
     }
 
     var startTime;
@@ -52,80 +51,87 @@ function getCharts(type, viewType)
     }
 
 
+    var data = {
+        localisations: localisations,
+        startTime: startTime,
+        endTime: endTime
+    };
+
+    downloadChartsData(type, data);
+}
+
+
+function downloadChartsData(type, data)
+{
+    var link = "http://" + window.location.hostname + "/FER/";
+    var serverPath = '';
+    var chartIdPrefix = '';
+
+
+    if (type == 'tcy') {
+        serverPath = link + 'models/getHistograms';
+        chartIdPrefix = 'tcy_';
+    } else if (type == 'cnv') {
+        serverPath = link + 'models/getConveyors';
+        chartIdPrefix = 'cnv_';
+    } else {
+        serverPath = link + 'models/getParetos';
+        chartIdPrefix = 'par_';
+    }
+    
+
     $.ajax({
         type: "POST",
-        url: link + 'models/getHistograms',
-        data: { localisations: localisations,
-                startTime: startTime,
-                endTime: endTime
-        },
-        error: function( jqXHR, textStatus, errorThrown ) {
+        url: serverPath,
+        data: data,
+        dataType: 'json',
+        
+        error: function (jqXHR, textStatus, errorThrown) {
             alert('error status: ' + textStatus + " - thrown: " + errorThrown);
         },
-        success: function(result) {
+        success: function (result) {
             if (result.success == true) {
                 var mainDiv = document.getElementById("mainGrafPanel");
 
                 var arrayLength = result.data.length;
 
                 for (var i = 0; i < arrayLength; i++) {
-                    var name = result.data[i].ilotName;
-                    var histData = result.data[i].histData;
+                    switch (type) {
+                        case 'tcy':
+                            $('#mainGrafPanel').append(getChartTemplate(chartIdPrefix + i));
+                            addTcyChart(result.data[i].ilotName, result.data[i].chartData, chartIdPrefix + i);
+                            break;
+                        case 'cnv':
+                            $('#mainGrafPanel').append(getChartTemplate(chartIdPrefix + i));
+                            addCnvChart(result.data[i].ilotName, result.data[i].chartData, chartIdPrefix + i);
+                            break;
+                        case 'par':
+                            var cntID = chartIdPrefix + 'cnt_' + i;
+                            var timeID = chartIdPrefix + 'time_' + i;
 
-                    var chartID = 'tcy_' + i;
-                    $('#mainGrafPanel').append(getChartTemplate(chartID));
+                            var cntData = result.data[i].chartData.cntPareto;
+                            var timeData = result.data[i].chartData.timePareto;
 
-                    addTcyChart(name, histData, chartID);
+                            $('#mainGrafPanel').append(getChartTemplate(cntID));
+                            $('#mainGrafPanel').append(getChartTemplate(timeID));
+
+                            addParChart(result.data[i].ilotName, cntData, cntID, 'cnt');
+                            addParChart(result.data[i].ilotName, timeData, timeID, 'time');
+                            break
+                        default:
+                            return;
+                    }
                 }
             }
-        },
-        dataType: 'json'
+        }
     });
-
-
-    // remData = {
-    //     ilotName: 'ILOT 1',
-    //     data: [["23/11/2016 06:02:55", 28], ["23/11/2016 06:03:40", 27], ["23/11/2016 06:05:55", 28]]
-    // };
-
-
-    // $.ajax({
-    //     type: "POST",
-    //     url: link + 'Main/getConveyors/',
-    //     data: { localisations: [],
-    //             startTime: '23/11/2016 06:00:00',
-    //             endTime: '23/11/2016 14:00:00'
-    //     },
-    //     error: function( jqXHR, textStatus, errorThrown ) {
-    //         alert('error status: ' + textStatus + " - thrown: " + errorThrown);
-    //     },
-    //     success: function(result) {
-    //         if (result.success == true) {
-    //             var mainDiv = document.getElementById("mainGrafPanel");
-    //             console.log(result.data[0]);
-
-    //             var arrayLength = result.data.length;
-
-    //             for (var i = 0; i < arrayLength; i++) {
-    //                 var name = result.data[i].ilotName;
-    //                 var cnvData = result.data[i].cnvData;
-
-    //                 $('#mainGrafPanel').append(getChartTemplate(i));
-
-    //                 addCnvChart(name, cnvData, i);
-    //             }
-    //         }
-    //     },
-    //     dataType: 'json'
-    // });
 }
-
 
 function addTcyChart(location, data, id) {
     var x = new Array;
     var y = new Array;
 
-    $.each(data, function(index, value) {
+    $.each(data, function (index, value) {
         y.push(index);
         x.push(value);
     });
@@ -143,8 +149,8 @@ function addTcyChart(location, data, id) {
         marker: {
             color: "rgba(255, 100, 102, 0.7)",
             line: {
-            color:  "rgba(255, 100, 102, 1)",
-            width: 1
+                color: "rgba(255, 100, 102, 1)",
+                width: 1
             }
         },
         opacity: 0.5,
@@ -172,7 +178,7 @@ function addCnvChart(location, data, id) {
     var x = new Array;
     var y = new Array;
 
-    $.each(data, function(index, value) {
+    $.each(data, function (index, value) {
         x.push(value[0]);
         y.push(value[1]);
     });
@@ -183,7 +189,60 @@ function addCnvChart(location, data, id) {
         type: 'scatter'
     };
 
-    Plotly.newPlot(id, [data]);
+    var layout = {
+        title: location,
+        xaxis: {
+            showgrid: false,
+            showticklabels: false
+        }
+    };
+
+    Plotly.newPlot(id, [data], layout);
+}
+
+
+function addParChart(location, data, id, type) {
+    var x = new Array;
+    var y = new Array;
+
+    var len = data.length;
+    var i = 0;
+    $.each(data, function (index, value) {
+        x.push(value[1] + ' [' + (len - i++) + ']');
+        y.push(parseInt(value[0]));
+    });
+
+    var tcy = {
+        x: x,
+        y: y,
+        name: 'control',
+        marker: {
+            line: {
+                color: "rgba(0, 0, 0, 1)",
+                width: 1
+            }
+        },
+        opacity: 0.5,
+        type: "bar",
+        orientation: 'v'
+    };
+
+    if (type == 'cnt') {
+        tcy.marker.color = "rgba(31, 119, 180, 0.7)";
+    } else {
+        tcy.marker.color = "rgba(255, 100, 102, 0.7)";
+    }
+
+    var data = [tcy];
+    var layout = {
+        title: location + (type == 'cnt' ? ' [Pocetnost]' : ' [Trvanie]'),
+        barmode: "group",
+        xaxis: {
+            showline: true
+        }
+    };
+
+    Plotly.newPlot(id, data, layout);
 }
 
 
