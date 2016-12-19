@@ -1,5 +1,5 @@
 function getCharts(type, viewType) {
-    var link = "http://" + window.location.hostname + "/FER/";
+    var link = "http://" + window.location.hostname + ":8080/FER/";
 
     var items = $('#' + type + 'Topo').jqxTree('getCheckedItems');
     var localisations = [];
@@ -11,6 +11,7 @@ function getCharts(type, viewType) {
 
     var startTime;
     var endTime;
+
 
     switch (viewType) {
         case 'raw':
@@ -44,12 +45,12 @@ function getCharts(type, viewType) {
             endTime = moment(time, 'DD/MM/YYYY').add(30, 'hour').format('DD/MM/YYYY HH:mm:ss');
             break;
         case 'week':
-
+            alert('Nie je implementovane!');
+            return;
             break;
         default:
             break;
     }
-
 
     var data = {
         localisations: localisations,
@@ -63,7 +64,7 @@ function getCharts(type, viewType) {
 
 function downloadChartsData(type, data)
 {
-    var link = "http://" + window.location.hostname + "/FER/";
+    var link = "http://" + window.location.hostname + ":8080/FER/";
     var serverPath = '';
     var chartIdPrefix = '';
 
