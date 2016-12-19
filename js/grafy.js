@@ -1,5 +1,5 @@
 function getCharts(type, viewType) {
-    var link = "http://" + window.location.hostname + "/FER/";
+    var link = "http://" + window.location.hostname + ":8080/FER/";
 
     var items = $('#' + type + 'Topo').jqxTree('getCheckedItems');
     var localisations = [];
@@ -64,7 +64,7 @@ function getCharts(type, viewType) {
 
 function downloadChartsData(type, data)
 {
-    var link = "http://" + window.location.hostname + "/FER/";
+    var link = "http://" + window.location.hostname + ":8080/FER/";
     var serverPath = '';
     var chartIdPrefix = '';
 

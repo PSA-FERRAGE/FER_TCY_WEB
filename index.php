@@ -208,7 +208,7 @@
                 return;
             }
 
-            var link = "http://" + window.location.hostname + "/FER/";
+            var link = "http://" + window.location.hostname + ":8080/FER/";
             var fncLink = link + 'models/getTree';
 
 

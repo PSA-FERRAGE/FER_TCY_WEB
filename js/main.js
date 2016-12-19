@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var link = "http://" + window.location.hostname + "/FER/";
+    var link = "http://" + window.location.hostname + ":8080/FER/";
 
     $('#toggleSidebar').click(function() {
         $(".content").toggleClass("isClosed");
