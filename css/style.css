@@ -95,7 +95,7 @@ body {
   justify-content: space-between;
   font-size: 30px;
   color: #eee;
-  padding: 5px 15px 0 9px;
+  padding: 5px 15px 0 0px;
 }
 .nadpis p {
   margin: 0px;
@@ -107,7 +107,7 @@ body {
   color: #ccc;
 }
 .nadpis p:first-child:hover {
-  color: #895;
+  color: #005BAB;
 }
 
 .graf-panel {
