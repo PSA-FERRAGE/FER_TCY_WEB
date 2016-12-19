@@ -24,10 +24,6 @@
             border-right-width: 1px;
         }
 
-        #toggleSidebar {
-            cursor:pointer;
-        }
-
         .input-group .form-control {
             position: static;
         }
