@@ -12,6 +12,7 @@ function getCharts(type, viewType) {
     var startTime;
     var endTime;
 
+
     switch (viewType) {
         case 'raw':
             startTime = $('#rawStartTime').val();
@@ -44,12 +45,12 @@ function getCharts(type, viewType) {
             endTime = moment(time, 'DD/MM/YYYY').add(30, 'hour').format('DD/MM/YYYY HH:mm:ss');
             break;
         case 'week':
-
+            alert('Nie je implementovane!');
+            return;
             break;
         default:
             break;
     }
-
 
     var data = {
         localisations: localisations,

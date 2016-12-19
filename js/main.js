@@ -12,6 +12,26 @@ $(document).ready(function () {
             var type = $('#topoTab li.active').data('type');
             var viewType = $('#searchTab li.active').data('type');
 
+            if (viewType == 'raw') {
+                if ($('#rawStartTime').val() == '' || $('#rawEndTime').val() == '') {
+                    alert('Zadajte datum!');   
+                    return;
+                }
+            } else if (viewType == 'shift') {
+                if ($('#shiftStartTime').val() == '') {
+                    alert('Zadajte datum!');   
+                    return;
+                }
+            } else if (viewType == 'day') {
+                if ($('#dayStartTime').val() == '') {
+                    alert('Zadajte datum!');   
+                    return;
+                }
+            } else {
+                alert('Nie je implementovane!');
+                return;
+            }
+
             getCharts(type, viewType);
         }
     });

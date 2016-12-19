@@ -87,7 +87,7 @@ SQL;
             SELECT duration, event
             FROM
             ( SELECT
-                ROUND((SSC99_M1.SSCQT03.FIN_EVT - SSC99_M1.SSCQT03.DEB_EVT)*86400) AS duration,
+                SUM(ROUND((SSC99_M1.SSCQT03.FIN_EVT - SSC99_M1.SSCQT03.DEB_EVT)*86400)) AS duration,
                 SSC99_M1.SSCQT03.DES_EVT40 as event
             FROM
                 SSC99_M1.SSCQT03
@@ -95,6 +95,7 @@ SQL;
             ( SSC99_M1.SSCQT03.DEB_EVT >= to_date(?,'DD/MM/YYYY HH24:MI:SS')
               AND  SSC99_M1.SSCQT03.FIN_EVT <= to_date(?,'DD/MM/YYYY HH24:MI:SS')
               AND  SSC99_M1.SSCQT03.ID_LOC  IN  (${clause}) )
+            GROUP BY SSC99_M1.SSCQT03.DES_EVT40
             ORDER BY 1 DESC )
             WHERE ROWNUM <= 10
             ORDER BY 1 ASC
