@@ -1,5 +1,5 @@
 function getCharts(type, viewType) {
-    var link = "http://" + window.location.hostname + ":8080/FER/";
+    //var link = "http://" + window.location.hostname + ":8080/FER/";
 
     var items = $('#' + type + 'Topo').jqxTree('getCheckedItems');
     var localisations = [];
@@ -64,19 +64,18 @@ function getCharts(type, viewType) {
 
 function downloadChartsData(type, data)
 {
-    var link = "http://" + window.location.hostname + ":8080/FER/";
     var serverPath = '';
     var chartIdPrefix = '';
 
 
     if (type == 'tcy') {
-        serverPath = link + 'models/getHistograms';
+        serverPath = window.link + 'models/getHistograms';
         chartIdPrefix = 'tcy_';
     } else if (type == 'cnv') {
-        serverPath = link + 'models/getConveyors';
+        serverPath = window.link + 'models/getConveyors';
         chartIdPrefix = 'cnv_';
     } else {
-        serverPath = link + 'models/getParetos';
+        serverPath = window.link + 'models/getParetos';
         chartIdPrefix = 'par_';
     }
     

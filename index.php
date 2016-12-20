@@ -175,6 +175,7 @@
         window.tcyLoaded = false;
         window.cnvLoaded = false;
         window.parLoaded = false;
+        window.link = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '') +"/FER/";
         // $('#treeTopology').jqxTree({hasThreeStates: true, checkboxes: true});
 // jqx-hideborder
         $("input.tcyPicker").ionRangeSlider({
@@ -206,8 +207,8 @@
                 return;
             }
 
-            var link = "http://" + window.location.hostname + ":8080/FER/";
-            var fncLink = link + 'models/getTree';
+            //var link = "http://" + window.location.hostname + ":8080/FER/";
+            var fncLink = window.link + 'models/getTree';
 
 
             $.get(fncLink, {type: type}, function(data) {
