@@ -34,6 +34,7 @@
 
         .irs {
             margin-top: 5px;
+            display: none;
         }
 
         .irs-slider {
@@ -92,6 +93,7 @@
                             </span>
                             <input id="shiftStartTime" class="form-control myDatePicker singleDatePicker" type="text" placeholder="Dátum" disabled/>
                         </div>
+                        <div style="display: block;float: left;padding-left: 5px; padding: 7px 20px 0px 0px;font-weight: bold;">Zmena: </div>
                         <select id="shiftSelect" class="selectpicker">
                             <option value='ranna'>Ranná</option>
                             <option value='poobedna'>Poobedná</option>
@@ -119,7 +121,7 @@
                             </span>
                             <input id="weekStartTime" class="form-control myDatePicker singleDatePicker" type="text" placeholder="Dátum" disabled/>
                         </div>
-                        <p>Týždeň: <span id="tyzdenNum"></span><p>
+                        <p style="font-weight: bold;padding: 5px 0;">Týždeň: <span id="tyzdenNum"></span><p>
                         <input class="tcyPicker" type="text" value="" />
                     </div>
                 </div>
