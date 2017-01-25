@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    window.link = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '') +"/FER/";
+
     $("input.tcyPicker").ionRangeSlider({
         min: 1,
         max: 10
@@ -25,7 +27,7 @@ $(document).ready(function () {
                 "icons": false
             },
             'data': {
-                'url': 'http://localhost:8080/FER_V2/data/getTopology',
+                'url': window.link + 'data/getTopology',
                 'method': 'POST',
                 'data': {'viewType': 'tcy'},
                 dataType: 'json'
@@ -91,7 +93,7 @@ $(document).ready(function () {
 
     function createTable() {
         $('#dataTbl').bootstrapTable({
-            url: 'http://localhost:8080/FER_V2/data/getTableData',
+            url: window.link + 'data/getTableData',
             method: 'GET',
             queryParams: function (p) {
                 p.localisation = 'SB';
