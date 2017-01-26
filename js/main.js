@@ -8,34 +8,28 @@ $(document).ready(function () {
     });
 
 
-    $('#searchTab a').click(function (e) {
-        e.preventDefault();
-
-        // var type = $(this).parent().data('type');
-        // // if (window[type + 'Loaded'] == false) {
-        // //     if (type === "par") {
-        // //         $('#charaktTgl').show();
-        // //     } else {
-        // //         $('#charaktTgl').hide();
-        // //     }
-
-        // loadTree(type);
-        // //     $('#'+type+'Topo').addClass('jqx-hideborder');
-        // //     window[type + 'Loaded'] = true;
-        // // }
-
-        // $(this).tab('show');
-    });
-
     $('.searchBtn').click(function () {
-        // var checked_ids = [];
-        // $.each($("#topo").jstree("get_checked",true), function(index, value) {
-        //     checked_ids.push(value.text);
-        // });
+        var checked_ids = [];
 
-        // console.log(checked_ids);
-        //$('#topo').jstree('open_all');
+        $('.sidebar').css('margin-left', -1 * ($('.sidebar').width() + 2));
+        $('.content').css('margin-left', 0);
+
+        $.each($("#topo").jstree("get_checked", true), function (index, value) {
+            checked_ids.push(value.text);
+        });
     });
+
+    $('.collapseBtn').click(function () {
+        if ($('.sidebar').css('margin-left') === "0px") {
+            $('.sidebar').css('margin-left', -1 * ($('.sidebar').width() + 2));
+            $('.content').css('margin-left', 0);
+        } else {
+            $('.sidebar').css('margin-left', 0);
+            $('.sidebar').css('transition', 'margin-left .2s');
+            $('.content').css('margin-left', $('.sidebar').width());
+        }
+    });
+
 
     $('.navbarBtn').click(function (e) {
         e.preventDefault();
@@ -262,6 +256,24 @@ $(document).ready(function () {
     }
 
     console.log('Page loaded.');
+
+    if ($('.topologia').width() > 300)
+        $('.sidebar').css('width', $('.topologia').width());
+    else
+        $('.sidebar').css('width', "300px");
+
+    $('.topologia_obsah').click(function () {
+        console.log("click");
+        console.log($('.topologia').width());
+        if ($('.topologia').width() > 300) {
+            $('.sidebar').css('width', $('.topologia').width() + 10);
+            $('.content').css('margin-left', $('.topologia').width() + 10);
+
+        } else {
+            $('.sidebar').css('width', "300px");
+            $('.content').css('margin-left', "300px");
+        }
+    });
 });
 
 
