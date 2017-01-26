@@ -33,13 +33,15 @@
         box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3), 0 0 8px 0 rgba(0, 0, 0, .19);
     }
     
-    .navbar-nav>li:active,
-    .navbar-nav>li:hover {
-        background-color: #1ABC9C;
+    .navbar-nav>li>a:active,
+    .navbar-nav>li>a:hover,
+    .navbar-nav>.active>a:hover{
+        background-color: #1ABC9C !important;
     }
     
     .navbar-inverse .navbar-nav>.open>a:focus,
-    .navbar-inverse .navbar-nav>.open>a:hover {
+    .navbar-inverse .navbar-nav>.open>a:hover
+     {
         background-color: #1ABC9C;
     }
     
@@ -57,7 +59,7 @@
         color: white;
     }
     
-    .navbar-inverse .navbar-nav>.active>a {
+    .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
         background-color: #1ABC9C;
     }
     
