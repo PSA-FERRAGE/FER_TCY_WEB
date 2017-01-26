@@ -8,11 +8,27 @@ $(document).ready(function () {
 
     $('.searchBtn').click(function(){
         var checked_ids = [];
+
+        $('.sidebar').css('margin-left', -1*($('.sidebar').width()+2));
+        $('.content').css('margin-left', 0);
+
         $.each($("#topo").jstree("get_checked",true), function(index, value) {
             checked_ids.push(value.text);
         });
 
         console.log(checked_ids);
+    });
+
+     $('.collapseBtn').click(function(){
+        if( $('.sidebar').css('margin-left') === "0px"){
+            $('.sidebar').css('margin-left', -1*($('.sidebar').width()+2));
+            $('.content').css('margin-left', 0);
+        } else{
+            $('.sidebar').css('margin-left', 0);
+            $('.sidebar').css('transition', 'margin-left .2s');
+            $('.content').css('margin-left', $('.sidebar').width());
+        }
+        
     });
 
 
@@ -25,7 +41,7 @@ $(document).ready(function () {
                 "icons": false
             },
             'data': {
-                'url': 'http://localhost:8080/FER_V2/data/getTopology',
+                'url': 'http://localhost/FER/data/getTopology',
                 'method': 'POST',
                 'data': {'viewType': 'tcy'},
                 dataType: 'json'
@@ -91,7 +107,7 @@ $(document).ready(function () {
 
     function createTable() {
         $('#dataTbl').bootstrapTable({
-            url: 'http://localhost:8080/FER_V2/data/getTableData',
+            url: 'http://localhost/FER/data/getTableData',
             method: 'GET',
             queryParams: function (p) {
                 p.localisation = 'SB';
@@ -182,6 +198,25 @@ $(document).ready(function () {
     }
 
     console.log('Page loaded.');
+
+    if($('.topologia').width() > 300)
+            $('.sidebar').css('width', $('.topologia').width());
+        else
+            $('.sidebar').css('width', "300px");
+
+    $('.topologia_obsah').click(function(){
+        console.log("click");
+        console.log($('.topologia').width());
+        if($('.topologia').width() > 300)
+        {
+            $('.sidebar').css('width', $('.topologia').width()+10);
+            $('.content').css('margin-left', $('.topologia').width() + 10);
+
+        }else{
+            $('.sidebar').css('width', "300px");
+            $('.content').css('margin-left', "300px");
+        }
+    });
 });
 
 

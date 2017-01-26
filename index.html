@@ -22,283 +22,301 @@
     <link type="text/css" rel="stylesheet" href="css/daterangepicker.css">
     <link type="text/css" rel="stylesheet" href="css/jstree_style.min.css">
     <style>
-        body {
-            background-color: #232D3B;
-        }
-        
-        .navbar {
-            margin: 10px 5px 5px 5px;
-            background-color: #34495E;
-            border: none;
-            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3), 0 0 8px 0 rgba(0, 0, 0, .19);
-        }
-        
-        .navbar-nav>li:active,
-        .navbar-nav>li:hover {
-            background-color: #1ABC9C;
-        }
-        
-        .navbar-inverse .navbar-nav>.open>a:focus,
-        .navbar-inverse .navbar-nav>.open>a:hover {
-            background-color: #1ABC9C;
-        }
-        
-        .navbar-nav>li>.dropdown-menu {
-            margin: 0px;
-            border-radius: 0px 0px 4px 4px;
-            background-color: rgb(52, 73, 94);
-        }
-        
-        .navbar-inverse .navbar-nav>li>a {
-            color: white;
-        }
-        
-        .dropdown-menu>li>a {
-            color: white;
-        }
-        
-        .navbar-inverse .navbar-nav>.active>a {
-            background-color: #1ABC9C;
-        }
-        
-        .fresh-table.full-color-orange {
-            background: rgba(0, 0, 0, 0);
-            border: 1px solid white;
-            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3), 0 0 8px 0 rgba(0, 0, 0, .19);
-            margin: 5px;
-        }
-        
-        .fresh-table[class*="full-color-"] .btn {
-            border: 1px solid;
-        }
-        
-        .sidebar {
-            width: 300px;
-            height: 100vh;
-            position: absolute;
-            z-index: 1000;
-            transition: width 0.5s;
-            background-color: rgba(0, 0, 0, .25);
-            border: 1px solid black;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3), 0 0 8px 0 rgba(0, 0, 0, .19);
-        }
-        
-        .sidebar.isClosed {
-            left: 0px;
-        }
-        
-        .sidebar>div {
-            margin-bottom: 8px;
-            padding: 4px;
-        }
-        
-        .sidebar>div:first-child {
-            border-bottom: 1px solid lightgrey;
-        }
-        
-        .sidebar .cas {
-            margin-bottom: 15px;
-        }
-        
-        .sidebar .cas .popis {
-            color: grey;
-        }
-        
-        .sidebar .topologia {
-            flex: 1;
-        }
-        
-        .double-input .form-control {
-            width: 50%;
-            border-right-width: 1px;
-        }
-        
-        .double-input .form-control:focus {
-            border-right-width: 1px;
-        }
-        
-        .input-group {
-            margin: 15px;
-        }
-        
-        .input-group .form-control {
-            position: static;
-        }
-        
-        .input-group-btn:first-child>.btn {
-            color: white;
-            opacity: 1;
-            border: 1px solid white;
-        }
-        
-        .input-group-btn:first-child>.btn:hover {
-            color: white;
-            border: 1px solid white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .input-group-btn:first-child>.btn:active {
-            color: white;
-            border: 1px solid white;
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .btn-group>.btn {
-            position: static;
-        }
-        
-        .irs {
-            margin-top: 5px;
-            display: none;
-        }
-        
-        .irs-slider {
-            display: none;
-        }
-        
-        .nav>li>a:hover {
-            background-color: transparent;
-        }
-        
-        .nav-tabs>li>a,
-        .nav-tabs>li.active>a,
-        .nav-tabs>li.active>a:focus,
-        .nav-tabs>li.active>a:hover {
-            color: white;
-        }
-        
-        .nav-tabs>li.active>a,
-        .nav-tabs>li.active>a:focus,
-        .nav-tabs>li.active>a:hover {
-            border: 1px solid white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .content {
-            transition: margin-left .5s;
-            margin-left: 300px;
-        }
-        
-        .input-group .form-control:not(:first-child):not(:last-child),
-        .input-group .form-control:last-child {
-            color: white;
-            background: rgba(0, 0, 0, 0);
-        }
-        
-        .input-group .form-control:not(:first-child):not(:last-child) {
-            border: 1px solid white;
-        }
-        
-        .input-group .form-control:last-child {
-            border-top: 1px solid white;
-            border-bottom: 1px solid white;
-            border-right: 1px solid white;
-        }
-        
-        select option {
-            background-color: #232D3B;
-        }
-        
-        select::-ms-expand {
-            display: none;
-        }
-        
-        select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            text-indent: 1px;
-            text-overflow: '';
-        }
-        
-        .bootstrap-select.btn-group>button {
-            border: 1px solid white;
-            opacity: 1;
-            color: white;
-        }
-        
-        .open>.dropdown-toggle.btn-default:hover,
-        .bootstrap-select.btn-group>button:hover {
-            border: 1px solid white;
-            opacity: 1;
-            color: white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .bootstrap-select.btn-group .dropdown-menu {
-            background: rgba(26, 34, 44, 1);
-            border: 1px solid white;
-            border-radius: 0px 0px 5px 5px;
-        }
-        
-        .form-control {
-            border: 1px solid #AAAAAA;
-        }
-        
-        .graf-panel {
-            flex: 1;
-            margin: 5px 5px 5px 10px;
-        }
-        
-        .graf-panel .graf-kontainer {
-            height: 460px;
-            background-color: #34495E;
-            box-shadow: 0px 2px 5px black;
-            padding: 4px;
-            margin-bottom: 8px;
-            display: flex;
-        }
-        
-        .graf-panel .graf-kontainer:first-child {
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-        }
-        
-        .graf-panel .graf-kontainer:last-child {
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
-        
-        .graf-panel .graf-kontainer .graf {
-            flex: 1;
-        }
-        
-        .graf-panel .graf-kontainer .graf img {
-            width: 100%;
-            height: 100%;
-        }
-        
-        .graf-panel .graf-kontainer .pareto {
-            flex: 0 150px;
-            margin-left: 4px;
-            border-left: 1px solid #232D3B;
-        }
-        
-        .jstree-default-dark {
-            background: transparent;
-        }
-        
-        .jstree-default-dark .jstree-wholerow-hovered {
-            border: 1px solid white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .jstree-default-dark.jstree-checkbox-no-clicked>.jstree-wholerow-ul .jstree-wholerow-clicked.jstree-wholerow-hovered {
-            border: 1px solid white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .jstree-default-dark.jstree-checkbox-no-clicked .jstree-clicked.jstree-hovered {
-            background: transparent;
-        }
-
-        .searchBtn {
-            opacity: 1.0;
-            background: transparent;
-            border: 1px solid white;
-            color: white;
-        }
+    body {
+        background-color: #232D3B;
+    }
+    
+    .navbar {
+        margin: 10px 5px 5px 5px;
+        background-color: #34495E;
+        border: none;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3), 0 0 8px 0 rgba(0, 0, 0, .19);
+    }
+    
+    .navbar-nav>li:active,
+    .navbar-nav>li:hover {
+        background-color: #1ABC9C;
+    }
+    
+    .navbar-inverse .navbar-nav>.open>a:focus,
+    .navbar-inverse .navbar-nav>.open>a:hover {
+        background-color: #1ABC9C;
+    }
+    
+    .navbar-nav>li>.dropdown-menu {
+        margin: 0px;
+        border-radius: 0px 0px 4px 4px;
+        background-color: rgb(52, 73, 94);
+    }
+    
+    .navbar-inverse .navbar-nav>li>a {
+        color: white;
+    }
+    
+    .dropdown-menu>li>a {
+        color: white;
+    }
+    
+    .navbar-inverse .navbar-nav>.active>a {
+        background-color: #1ABC9C;
+    }
+    
+    .fresh-table.full-color-orange {
+        background: rgba(0, 0, 0, 0);
+        border: 1px solid white;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3), 0 0 8px 0 rgba(0, 0, 0, .19);
+        margin: 5px;
+    }
+    
+    .fresh-table[class*="full-color-"] .btn {
+        border: 1px solid;
+    }
+    
+    .sidebar {
+        display: inline-block;
+        position: absolute;
+        z-index: 1000;
+        transition: width 0.2s;
+        background-color: rgba(0, 0, 0, .25);
+        border: 1px solid black;
+/*        border-top-right-radius: 10px;*/
+        border-bottom-right-radius: 10px;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3), 0 0 8px 0 rgba(0, 0, 0, .19);
+    }
+    
+    .sidebar.isClosed {
+        left: 0px;
+    }
+    
+    .sidebar>div {
+        margin-bottom: 8px;
+        padding: 4px;
+    }
+    
+    .sidebar>div:second-child {
+        border-bottom: 1px solid lightgrey;
+    }
+    
+    .sidebar .cas {
+        margin-bottom: 15px;
+    }
+    
+    .sidebar .cas .popis {
+        color: grey;
+    }
+    
+    .sidebar .topologia {
+        display: inline-block;
+        flex: 1;
+    }
+    
+    .double-input .form-control {
+        width: 50%;
+        border-right-width: 1px;
+    }
+    
+    .double-input .form-control:focus {
+        border-right-width: 1px;
+    }
+    
+    .input-group {
+        margin: 15px;
+    }
+    
+    .input-group .form-control {
+        position: static;
+    }
+    
+    .input-group-btn:first-child>.btn {
+        color: white;
+        opacity: 1;
+        border: 1px solid white;
+    }
+    
+    .input-group-btn:first-child>.btn:hover {
+        color: white;
+        border: 1px solid white;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .input-group-btn:first-child>.btn:active {
+        color: white;
+        border: 1px solid white;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .btn-group>.btn {
+        position: static;
+    }
+    
+    .irs {
+        margin-top: 5px;
+        display: none;
+    }
+    
+    .irs-slider {
+        display: none;
+    }
+    
+    .nav>li>a:hover {
+        background-color: transparent;
+    }
+    
+    .nav-tabs>li>a,
+    .nav-tabs>li.active>a,
+    .nav-tabs>li.active>a:focus,
+    .nav-tabs>li.active>a:hover {
+        color: white;
+    }
+    
+    .nav-tabs>li.active>a,
+    .nav-tabs>li.active>a:focus,
+    .nav-tabs>li.active>a:hover {
+        border: 1px solid white;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .content {
+        transition: margin-left .2s;
+        margin-left: 300px;
+    }
+    
+    .input-group .form-control:not(:first-child):not(:last-child),
+    .input-group .form-control:last-child {
+        color: white;
+        background: rgba(0, 0, 0, 0);
+    }
+    
+    .input-group .form-control:not(:first-child):not(:last-child) {
+        border: 1px solid white;
+    }
+    
+    .input-group .form-control:last-child {
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
+        border-right: 1px solid white;
+    }
+    
+    select option {
+        background-color: #232D3B;
+    }
+    
+    select::-ms-expand {
+        display: none;
+    }
+    
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
+    }
+    
+    .bootstrap-select.btn-group>button {
+        border: 1px solid white;
+        opacity: 1;
+        color: white;
+    }
+    
+    .open>.dropdown-toggle.btn-default:hover,
+    .bootstrap-select.btn-group>button:hover {
+        border: 1px solid white;
+        opacity: 1;
+        color: white;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .bootstrap-select.btn-group .dropdown-menu {
+        background: rgba(26, 34, 44, 1);
+        border: 1px solid white;
+        border-radius: 0px 0px 5px 5px;
+    }
+    
+    .form-control {
+        border: 1px solid #AAAAAA;
+    }
+    
+    .graf-panel {
+        flex: 1;
+        margin: 5px;
+    }
+    
+    .graf-panel .graf-kontainer {
+        height: 460px;
+        background-color: #34495E;
+        box-shadow: 0px 2px 5px black;
+        padding: 4px;
+        margin-bottom: 8px;
+        display: flex;
+    }
+    
+    .graf-panel .graf-kontainer:first-child {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+    
+    .graf-panel .graf-kontainer:last-child {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+    
+    .graf-panel .graf-kontainer .graf {
+        flex: 1;
+    }
+    
+    .graf-panel .graf-kontainer .graf img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .graf-panel .graf-kontainer .pareto {
+        flex: 0 150px;
+        margin-left: 4px;
+        border-left: 1px solid #232D3B;
+    }
+    
+    .jstree-default-dark {
+        background: transparent;
+    }
+    
+    .jstree-default-dark .jstree-wholerow-hovered {
+        border: 1px solid white;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .jstree-default-dark.jstree-checkbox-no-clicked>.jstree-wholerow-ul .jstree-wholerow-clicked.jstree-wholerow-hovered {
+        border: 1px solid white;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .jstree-default-dark.jstree-checkbox-no-clicked .jstree-clicked.jstree-hovered {
+        background: transparent;
+    }
+    
+    .searchBtn {
+        opacity: 1.0;
+        background: transparent;
+        border: 1px solid white;
+        color: white;
+    }
+    
+    .collapseBtn {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        font-size: 33px;
+        float: right;
+        color: #b9b9b9;
+        margin-right: -50px;
+        margin-bottom: 0 !important;
+        background-color: rgb(26, 34, 44);
+        border: 1px solid black;
+        border-left: 0;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        margin-top: -1px;
+    }
     </style>
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/moment.min.js"></script>
@@ -318,8 +336,7 @@
 <body>
     <div id="preloader" style="display: none;">
         <div class="scene">
-            <svg version="1.1" id="dc-spinner" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width: "38" height: "38" viewBox="0 0 38 38"
-                preserveAspectRatio="xMinYMin meet">
+            <svg version="1.1" id="dc-spinner" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width: "38" height: "38" viewBox="0 0 38 38" preserveAspectRatio="xMinYMin meet">
                 <text x="14.5" y="21" font-family="Monaco" font-size="2px" style="letter-spacing:1.0" fill="grey">NAČÍTAVAM
                     <animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite" />
                 </text>
@@ -332,15 +349,13 @@
     S32.922,27.125,32.922,20C32.922,12.875,27.125,7.078,20,7.078z">
                 </path>
                 <path fill="#2AA198" stroke="#2AA198" stroke-width="0.6027" stroke-miterlimit="10" d="M5.203,20
-			c0-8.159,6.638-14.797,14.797-14.797V5C11.729,5,5,11.729,5,20s6.729,15,15,15v-0.203C11.841,34.797,5.203,28.159,5.203,20z">
-                    <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" calcMode="spline" keySplines="0.4, 0, 0.2, 1"
-                        keyTimes="0;1" dur="2s" repeatCount="indefinite" />
+            c0-8.159,6.638-14.797,14.797-14.797V5C11.729,5,5,11.729,5,20s6.729,15,15,15v-0.203C11.841,34.797,5.203,28.159,5.203,20z">
+                    <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" calcMode="spline" keySplines="0.4, 0, 0.2, 1" keyTimes="0;1" dur="2s" repeatCount="indefinite" />
                 </path>
                 <path fill="#859900" stroke="#859900" stroke-width="0.2027" stroke-miterlimit="10" d="M7.078,20
   c0-7.125,5.797-12.922,12.922-12.922V6.875C12.763,6.875,6.875,12.763,6.875,20S12.763,33.125,20,33.125v-0.203
   C12.875,32.922,7.078,27.125,7.078,20z">
-                    <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="1.8s" repeatCount="indefinite"
-                    />
+                    <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="1.8s" repeatCount="indefinite" />
                 </path>
             </svg>
         </div>
@@ -366,6 +381,9 @@
         </div>
     </nav>
     <div class="sidebar">
+        <div class="collapseBtn">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </div>
         <div class="sidebar-content">
             <div class="cas">
                 <ul id="searchTab" class="nav nav-tabs" role="tablist">
