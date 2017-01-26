@@ -330,6 +330,7 @@
     <script type="text/javascript" src="js/daterangepicker.js" defer></script>
     <script type="text/javascript" src="js/ion.rangeSlider.min.js" defer></script>
     <script type="text/javascript" src="js/jstree.min.js" defer></script>
+    <script type="text/javascript" src="js/init.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </head>
 
@@ -367,7 +368,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="navbarBtn" data-type="tcy"><a href="#">Čas cyklu</a></li>
+                    <li id="cycleTimeBtn"  class="navbarBtn" data-type="tcy"><a href="#">Čas cyklu</a></li>
                     <li class="navbarBtn" data-type="cnv"><a href="#">Dopravníky</a></li>
                     <li class="navbarBtn" data-type="par"><a href="#">Pareto</a></li>
                     <li class="navbarBtn" data-type="tab"><a href="#">Zastavenia</a></li>
@@ -383,7 +384,7 @@
             <div class="cas">
                 <ul id="searchTab" class="nav nav-tabs" role="tablist">
                     <li class="nav-item" data-type="raw">
-                        <a class="nav-link" data-toggle="tab" href="#rawTab" role="tab">RAW</a>
+                        <a id="rawBtn" class="nav-link" data-toggle="tab" href="#rawTab" role="tab">RAW</a>
                     </li>
                     <li class="nav-item" data-type="shift">
                         <a class="nav-link" data-toggle="tab" href="#shiftTab" role="tab">Zmena</a>
