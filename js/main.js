@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    window.link = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '') +"/FER/";
+    window.link = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + "/FER/";
 
     $("input.tcyPicker").ionRangeSlider({
         min: 1,
@@ -8,51 +8,53 @@ $(document).ready(function () {
     });
 
 
-    $('.searchBtn').click(function(){
+    $('.searchBtn').click(function () {
         var checked_ids = [];
 
-        $('.sidebar').css('margin-left', -1*($('.sidebar').width()+2));
+        $('.sidebar').css('margin-left', -1 * ($('.sidebar').width() + 2));
         $('.content').css('margin-left', 0);
 
-        $.each($("#topo").jstree("get_checked",true), function(index, value) {
+        $.each($("#topo").jstree("get_checked", true), function (index, value) {
             checked_ids.push(value.text);
         });
-
-        console.log(checked_ids);
     });
 
-     $('.collapseBtn').click(function(){
-        if( $('.sidebar').css('margin-left') === "0px"){
-            $('.sidebar').css('margin-left', -1*($('.sidebar').width()+2));
+    $('.collapseBtn').click(function () {
+        if ($('.sidebar').css('margin-left') === "0px") {
+            $('.sidebar').css('margin-left', -1 * ($('.sidebar').width() + 2));
             $('.content').css('margin-left', 0);
-        } else{
+        } else {
             $('.sidebar').css('margin-left', 0);
             $('.sidebar').css('transition', 'margin-left .2s');
             $('.content').css('margin-left', $('.sidebar').width());
         }
-        
     });
 
 
-    // data format demo
-    $('#topo').jstree({
-        'core': {
-            "themes": {
-                "name": "default-dark",
-                "dots": false,
-                "icons": false
-            },
-            'data': {
-                'url': window.link + 'data/getTopology',
-                'method': 'POST',
-                'data': {'viewType': 'tcy'},
-                dataType: 'json'
+    $('.navbarBtn').click(function (e) {
+        e.preventDefault();
+
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active');
+            if ($(this).data('type') === 'tab') {
+                $('#table').hide();
+            } else {
+                $('#chartsArea').hide();
             }
-        },
-        "checkbox": {
-            "keep_selected_style": false
-        },
-        "plugins": ["wholerow", "checkbox"]
+        } else {
+            $('.navbarBtn').removeClass('active');
+            $(this).addClass('active');
+            if ($(this).data('type') === 'tab') {
+                $('#chartsArea').hide();
+                $('#table').show();
+                createTable();
+            } else {
+                $('#table').hide();
+                $('#chartsArea').show();
+            }
+            console.log($(this).data('type'));
+            loadTree($(this).data('type'));
+        }
     });
 
 
@@ -105,7 +107,61 @@ $(document).ready(function () {
         }
     });
 
-    // createTable();
+
+    $('.singleTimeBtn').on('apply.daterangepicker', function (ev, picker) {
+        var viewType = $('#searchTab li.active').data('type');
+
+        switch (viewType) {
+            case 'shift':
+                $('#shiftStartTime').val(picker.startDate.format('DD/MM/YYYY'));
+                break;
+            case 'day':
+                $('#dayStartTime').val(picker.startDate.format('DD/MM/YYYY'));
+                break;
+            case 'week':
+                $('#weekStartTime').val(picker.startDate.format('DD/MM/YYYY'));
+                $('#tyzdenNum').text(moment($('#weekStartTime').val(), 'DD/MM/YYYY').isoWeek());
+                break;
+            default:
+                break;
+        }
+    });
+
+
+    $('#timeRngBtn').on('apply.daterangepicker', function (ev, picker) {
+        $('#rawStartTime').val(picker.startDate.format('DD/MM/YYYY HH:mm:ss'));
+        $('#rawEndTime').val(picker.endDate.format('DD/MM/YYYY HH:mm:ss'));
+    });
+
+
+    function loadTree(treeType) {
+        if (treeType != 'tcy' && treeType != 'cnv' && treeType != 'par') {
+            return;
+        }
+
+        $('#topo').jstree({
+            'core': {
+                "themes": {
+                    "name": "default-dark",
+                    "dots": false,
+                    "icons": false
+                },
+                'data': {
+                    'url': window.link + 'data/getTopology',
+                    'method': 'POST',
+                    'data': {
+                        'viewType': treeType
+                    },
+                    dataType: 'json'
+                }
+            },
+            "checkbox": {
+                "keep_selected_style": false
+            },
+            "plugins": ["wholerow", "checkbox"]
+        });
+    }
+
 
     function createTable() {
         $('#dataTbl').bootstrapTable({
@@ -201,20 +257,19 @@ $(document).ready(function () {
 
     console.log('Page loaded.');
 
-    if($('.topologia').width() > 300)
-            $('.sidebar').css('width', $('.topologia').width());
-        else
-            $('.sidebar').css('width', "300px");
+    if ($('.topologia').width() > 300)
+        $('.sidebar').css('width', $('.topologia').width());
+    else
+        $('.sidebar').css('width', "300px");
 
-    $('.topologia_obsah').click(function(){
+    $('.topologia_obsah').click(function () {
         console.log("click");
         console.log($('.topologia').width());
-        if($('.topologia').width() > 300)
-        {
-            $('.sidebar').css('width', $('.topologia').width()+10);
+        if ($('.topologia').width() > 300) {
+            $('.sidebar').css('width', $('.topologia').width() + 10);
             $('.content').css('margin-left', $('.topologia').width() + 10);
 
-        }else{
+        } else {
             $('.sidebar').css('width', "300px");
             $('.content').css('margin-left', "300px");
         }
@@ -230,6 +285,10 @@ $(document).ready(function () {
 });
 });
 
+
+function getTableParams(params) {
+    return params;
+}
 
 function getTimeInterval(type, isStart) {
     var result = {
