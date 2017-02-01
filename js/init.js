@@ -1,5 +1,32 @@
 $(document).ready(function () {
+    window.numOfAjaxQrys = 0;
     window.link = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + "/FER/";
+
+    $(document).ajaxSend(function(e, jqXHR){
+        if (window.numOfAjaxQrys === 0) {
+            $('#preloader').show();
+        }
+
+        window.numOfAjaxQrys += 1;
+    });
+
+
+    $(document).ajaxComplete(function(e, jqXHR){
+        console.log('ajaxEnd');
+        window.numOfAjaxQrys -= 1;
+        if (window.numOfAjaxQrys === 0) {
+            $('#preloader').hide();
+        }
+    });
+
+    //when ajax starts, show loading div
+    $('#preloader').hide().on('ajaxStart', function(){
+
+    });
+    //when ajax ends, hide div
+    $('#preloader').on('ajaxEnd', function(){
+
+    });
 
     $('#rawBtn').click();
 
@@ -76,10 +103,7 @@ $(document).ready(function () {
 
 
     $('#dataTbl').bootstrapTable({
-        url: window.link + 'data/getTableData',
-        method: "POST",
-        queryParams: function(p) { return { id: $('#myid').val() }; },
-        showRefresh: true,
+        showRefresh: false,
         showExport: true,
         exportTypes: ['excel', 'csv'],
         exportDataType: 'all',
@@ -100,7 +124,23 @@ $(document).ready(function () {
             clear: 'glyphicon-trash icon-clear'
         },
         columns: [{ field: "0", title: 'Lokalizácia', align: 'center', sortable: true, valign: "middle", filterControl: 'select' },
-                  { field: "1", title: 'Začiatok', align: 'center', sortable: true, valign: "middle", filterControl: 'input' },
+                  { field: "1", title: 'Začiatok', align: 'center', sortable: true, valign: "middle", filterControl: 'input',
+                    sorter: function(a, b) {
+                        if (a === null || b === null)
+                            return;
+
+                        if (a > b) return 1;
+                        if (a < b) return -1;
+                        return 0;
+                    },
+                    formatter: function(value, row, index) {
+                        if (value === null)
+                            return;
+
+                        var date = moment.unix(value);
+                        return date.format("DD/MM/YYYY HH:mm");
+                    }
+                  },
                   { field: "2", title: 'Trvanie [s]', align: 'center', sortable: true, valign: "middle", filterControl: 'input' },
                   { field: "3", title: 'Mnemonika', align: 'center', sortable: true, valign: "middle", filterControl: 'select' },
                   { field: "4", title: 'Trieda', align: 'center', sortable: true, valign: "middle", filterControl: 'select' },
@@ -109,6 +149,7 @@ $(document).ready(function () {
         onRefresh: function (params) { $('#preloader').show(); },
         onLoadSuccess: function (data) { $('#preloader').hide(); }
     });
+
 
 
     function getTableParams() {
@@ -162,7 +203,29 @@ $(document).ready(function () {
 
         return result.endTime;
     }
+
+
+    function checkTime(i) {
+        return (i < 10) ? "0" + i : i;
+    }
+
+    function startTime() {
+        var today = new Date(),
+            h = checkTime(today.getHours()),
+            m = checkTime(today.getMinutes()),
+            s = checkTime(today.getSeconds()),
+            D = checkTime(today.getDate()),
+            M = checkTime(today.getMonth() + 1),
+            Y = today.getFullYear();
+        document.getElementById('time').innerHTML = D + ". " + M + ". " + Y + " " + h + ":" + m + ":" + s + "\t";
+        t = setTimeout(function () {
+            startTime();
+        }, 500);
+    }
+
+    startTime();
 });
+
 
 
     function getData(type, viewType) {
@@ -211,7 +274,7 @@ $(document).ready(function () {
         }
 
         $.each($("#topo").jstree("get_checked", true), function (index, value) {
-            checked_ids.push(value.text);
+            checked_ids.push(value.id);
         });
 
         var data = {
