@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     $('.searchBtn').click(function () {
         var viewType = getActualViewType();
         var timeRgnType = getActualTimeRngType();
@@ -153,7 +152,7 @@ function getTopologyNodes(viewType) {
         $.each($("#topo").jstree("get_top_checked", true), function (index, node) {
             nodes.push(node.id);
         });
-    } else if (viewType == "cnv") {
+    } else if (viewType == "cnv" || viewType == "op") {
         $.each($("#topo").jstree("get_bottom_selected", true), function (index, node) {
             nodes.push(node.id);
         });

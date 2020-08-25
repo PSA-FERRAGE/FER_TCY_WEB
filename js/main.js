@@ -8,7 +8,7 @@ $(document).ready(function () {
             $('.content').css('margin-left', $('.sidebar').width() + 50);
         }
 
-        setTimeout(function() {
+        setTimeout(function () {
             var chartDivs = $('.graf-kontainer');
             if (chartDivs.length > 0) {
                 var dimmensions = {
@@ -17,7 +17,7 @@ $(document).ready(function () {
 
                 var charts = $('.graf > div');
                 $.each(charts, function (index, chart) {
-                    Plotly.relayout(chart.id, dimmensions);    
+                    Plotly.relayout(chart.id, dimmensions);
                 });
             }
         }, 200);
@@ -55,12 +55,16 @@ $(document).ready(function () {
                 $('#chartsArea').hide();
                 $('#table').show();
             } else {
-                $('#table').hide();
+                $('#table').hide(); 
                 $('#chartsArea').show();
             }
 
-            if (type == "par" || type == "tab") {
+            if (type == "op") {
                 $('.charakterizovane').show();
+                $('.charakterizovane > label > span').text('Operator:');
+            } else if (type == "par" || type == "tab") {
+                $('.charakterizovane').show();
+                $('.charakterizovane > label > span').text('Charakterizované:');
             } else {
                 $('.charakterizovane').hide();
             }
@@ -97,7 +101,7 @@ $(document).ready(function () {
 
 
     function loadTree(treeType) {
-        if (treeType != 'tcy' && treeType != 'cnv' && treeType != 'par' && treeType != 'tab') {
+        if (treeType != 'op' && treeType != 'tcy' && treeType != 'cnv' && treeType != 'par' && treeType != 'tab') {
             return;
         }
 

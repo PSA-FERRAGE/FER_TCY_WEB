@@ -2,6 +2,9 @@ function createCharts(type, nodes, timeRange, timeRgnType) {
     $('.graf-kontainer').remove();
 
     switch (type) {
+        case 'op':
+            createOperatorsCharts(nodes, timeRange, timeRgnType);
+            break;
         case 'tcy':
             createCycleTimesCharts(nodes, timeRange);
             break;
@@ -17,6 +20,37 @@ function createCharts(type, nodes, timeRange, timeRgnType) {
     }
 }
 
+function createOperatorsCharts(nodes, timeRange, timeRgnType) {
+    var opChecked = $('#' + timeRgnType + "_toggle").prop('checked');
+    
+    $.ajax({
+        type: "POST",
+        url: window.link + "data/getOperatorsCharts",
+        data: {
+            localisations: nodes,
+            startTime: timeRange.startTime,
+            endTime: timeRange.endTime,
+            opChecked: opChecked
+        },
+        dataType: "json",
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log('error status: ' + textStatus + " - thrown: " + errorThrown);
+        },
+        success: function (response) {
+            if (response.success) {
+                var mainDiv = document.getElementById("chartsArea");
+                var arrayLength = response.data.length;
+
+                for (var i = 0; i < arrayLength; i++) {
+                    $('#chartsArea').append(getChartTemplate('op_' + i));
+                    addOpChart(response.data[i].postName, response.data[i].chartData, response.data[i].median, 'op_' + i);
+                }
+            } else {
+                console.log(response);
+            }
+        }
+    });
+}
 
 function createCycleTimesCharts(nodes, timeRange) {
     $.ajax({
@@ -191,6 +225,94 @@ function addTcyChart(location, data, id) {
     };
 
     Plotly.newPlot(id, data, layout);
+}
+
+
+function addOpChart(location, data, median, id) {
+    var x1 = new Array;
+    var x2 = new Array;
+    var x3 = new Array;
+    var y1 = new Array;
+    var y2 = new Array;
+    var y3 = new Array;
+
+    $.each(data, function (index, value) {
+        x1.push(value[0]);
+        x2.push(value[0]);
+        x3.push(value[0]);
+
+        y1.push(value[1]);
+        y2.push(value[2]);
+        y3.push(median);
+    });
+
+    var data1 = {
+        name: 'Hodnota',
+        x: x1,
+        y: y1,
+        type: 'scatter',
+        line: {
+            color: "rgb(255, 255, 255)"
+        }
+    };
+
+    var data2 = {
+        name: 'Ciel',
+        x: x2,
+        y: y2,
+        type: 'scatter',
+        line: {
+            color: "rgb(255, 0, 0)"
+        }
+    };
+
+    var data3 = {
+        name: 'Median',
+        x: x3,
+        y: y3,
+        type: 'scatter',
+        line: {
+            color: "rgb(0, 0, 255)"
+        }
+    };
+
+    var layout = {
+        showlegend: false,
+        autosize: true,
+        title: location,
+        titlefont: {
+            color: "rgb(255, 255, 255)"
+        },
+        margin: {
+            t: 30,
+            r: 30,
+            b: 30,
+            l: 30
+        },
+        xaxis: {
+            showgrid: false,
+            showticklabels: false,
+            showline: true,
+            linecolor: "rgb(255, 255, 255)",
+            tickfont: {
+                color: "rgb(255, 255, 255)"
+            }
+        },
+        yaxis: {
+            showgrid: false,
+            showline: true,
+            linecolor: "rgb(255, 255, 255)",
+            zeroline: false,
+            tickfont: {
+                color: "rgb(255, 255, 255)"
+            },
+            gridcolor: "rgba(255, 255, 255, 0.5)"
+        },
+        plot_bgcolor: "rgb(0, 0, 0, 0)",
+        paper_bgcolor: "rgb(0, 0, 0, 0)"
+    };
+
+    Plotly.newPlot(id, [data1, data2, data3], layout);
 }
 
 

@@ -1,6 +1,6 @@
 $(document).ready(function () {
     window.numOfAjaxQrys = 0;
-    window.link = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + "/FER/";
+    window.link = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + "/";
 
     $(document).ajaxSend(function(e, jqXHR){
         if (window.numOfAjaxQrys === 0) {

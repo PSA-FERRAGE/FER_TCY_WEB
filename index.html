@@ -22,594 +22,8 @@
     <link type="text/css" rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css">
     <link type="text/css" rel="stylesheet" href="css/daterangepicker.css">
     <link type="text/css" rel="stylesheet" href="css/jstree_style.min.css">
-    <style>
-        html {
-            height: 100%;
-        }
-        
-        body {
-            /*background-color: #232D3B;*/
-            background: radial-gradient(circle at 1.98% 72.96%, #085078, transparent 100%), radial-gradient(circle at 98.02% 6.04%, #85D8CE, transparent 100%), radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%);
-            margin: 0px;
-            padding: 0px;
-            height: 100%;
-            overflow: auto;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-        
-        .parentDiv {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            position: relative;
-        }
+    <link type="text/css" rel="stylesheet" href="css/style.css">
 
-        .childDiv {
-            position: absolute;
-            top: 0px;
-            bottom: 0px;
-            left: 0px;
-            right: -17px;
-            overflow: auto;
-        }
-        
-        .navbar {
-            margin: 5px 0px 10px 0px;
-            /*background-color: #34495E;*/
-            background-color: rgba(0, 0, 0, .25);
-            border-top: 1px solid white;
-            border-bottom: 1px solid white;
-            border-left: none;
-            border-right: none;
-            border-radius: 0;
-            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3), 0 0 8px 0 rgba(0, 0, 0, .19);
-        }
-        
-        .container-fluid {
-            padding-right: 0px;
-        }
-        
-        .navbar-right {
-            border-left: 1px solid white;
-        }
-        
-        .navbar-inverse .navbar-brand,
-        .navbar-inverse .navbar-brand:hover,
-        .navbar-inverse .navbar-brand:focus {
-            color: white;
-            background-color: #0b1920;
-            border-right: 1px solid white;
-            font-weight: bold;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            text-decoration: none;
-            cursor: default;
-        }
-        
-        .navbar-nav>li>a:active,
-        .navbar-nav>li>a:hover,
-        .navbar-nav>.active>a:hover {
-            background-color: rgba(255, 255, 255, 0.1) !important;
-            border-left: 1px solid white;
-            border-right: 1px solid white;
-        }
-        
-        #cycleTimeBtn.active>a,
-        #cycleTimeBtn>a:hover,
-        #cycleTimeBtn>a:focus {
-            border-right: 1px solid white;
-            border-left: none;
-        }
-        
-        .navbar-inverse .navbar-nav>.open>a:focus,
-        .navbar-inverse .navbar-nav>.open>a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .navbar-nav>li>.dropdown-menu {
-            margin: 0px;
-            border-radius: 0px 0px 4px 4px;
-            background-color: rgb(52, 73, 94);
-        }
-        
-        .navbar-inverse .navbar-nav>li>a {
-            color: white;
-        }
-        
-        .navbar-inverse .navbar-text {
-            color: white;
-            font-weight: bold;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            text-decoration: none;
-            cursor: default;
-        }
-        
-        .dropdown-menu>li>a {
-            color: white;
-        }
-        
-        .navbar-inverse .navbar-nav>.active>a,
-        .navbar-inverse .navbar-nav>.active>a:focus,
-        .navbar-inverse .navbar-nav>.active>a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-left: 1px solid white;
-            border-right: 1px solid white;
-            font-weight: bold;
-        }
-        
-        .bootstrap-table .table {
-            border: none;
-        }
-        
-        .fresh-table.full-color-orange {
-            background: rgba(0, 0, 0, 0.25);
-            border: 1px solid white;
-            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3), 0 0 8px 0 rgba(0, 0, 0, .19);
-            margin: 5px;
-        }
-        
-        .fresh-table[class*="full-color-"] .btn {
-            border: 1px solid;
-        }
-        
-        .sidebar {
-            display: inline-block;
-            position: absolute;
-            z-index: 1000;
-            transition: margin-left 0.2s;
-            background-color: rgba(0, 0, 0, .25);
-            border-top: 1px solid white;
-            border-right: 1px solid white;
-            border-bottom: 1px solid white;
-            border-bottom-right-radius: 10px;
-            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3), 0 0 8px 0 rgba(0, 0, 0, .19);
-        }
-        
-        .sidebar.isClosed {
-            left: 0px;
-        }
-        
-        .sidebar>div {
-            margin-bottom: 8px;
-            padding: 4px;
-        }
-        
-        .sidebar>div:second-child {
-            border-bottom: 1px solid lightgrey;
-        }
-        
-        .sidebar .cas {
-            margin-bottom: 15px;
-        }
-        
-        .sidebar .cas .popis {
-            color: grey;
-        }
-        
-        .sidebar .topologia {
-            display: inline-block;
-            flex: 1;
-        }
-        
-        .double-input .form-control {
-            width: 50%;
-            border-right-width: 1px;
-        }
-        
-        .double-input .form-control:focus {
-            border-right-width: 1px;
-        }
-        
-        .input-group {
-            margin: 10px;
-        }
-        
-        .input-group .form-control {
-            position: static;
-        }
-        
-        .input-group-btn:first-child>.btn {
-            color: white;
-            opacity: 1;
-            border: 1px solid white;
-        }
-        
-        .input-group-btn:first-child>.btn:hover {
-            color: white;
-            border: 1px solid white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .input-group-btn:first-child>.btn:active {
-            color: white;
-            border: 1px solid white;
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .btn-group>.btn {
-            position: static;
-        }
-        
-        .irs {
-            margin-top: 5px;
-            display: none;
-        }
-        
-        .irs-slider {
-            display: none;
-        }
-        
-        .nav>li>a:hover {
-            background-color: transparent;
-        }
-        
-        .nav-tabs>li>a,
-        .nav-tabs>li.active>a,
-        .nav-tabs>li.active>a:focus,
-        .nav-tabs>li.active>a:hover {
-            color: white;
-        }
-        
-        .nav-tabs>li.active>a,
-        .nav-tabs>li.active>a:focus,
-        .nav-tabs>li.active>a:hover {
-            border: 1px solid white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .content {
-            transition: margin-left .2s;
-            margin-left: 478px;
-        }
-        
-        .input-group .form-control:not(:first-child):not(:last-child),
-        .input-group .form-control:last-child {
-            color: white;
-            background: rgba(0, 0, 0, 0);
-        }
-        
-        .input-group .form-control:not(:first-child):not(:last-child) {
-            border: 1px solid white;
-        }
-        
-        .input-group .form-control:last-child {
-            border-top: 1px solid white;
-            border-bottom: 1px solid white;
-            border-right: 1px solid white;
-        }
-        
-        select option {
-            background-color: #232D3B;
-        }
-        
-        select::-ms-expand {
-            display: none;
-        }
-        
-        select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            text-indent: 1px;
-            text-overflow: '';
-        }
-        
-        .bootstrap-select.btn-group>button {
-            border: 1px solid white;
-            opacity: 1;
-            color: white;
-        }
-        
-        .open>.dropdown-toggle.btn-default:hover,
-        .bootstrap-select.btn-group>button:hover {
-            border: 1px solid white;
-            opacity: 1;
-            color: white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .bootstrap-select.btn-group .dropdown-menu {
-            background: rgba(26, 34, 44, 1);
-            border: 1px solid white;
-            border-radius: 0px 0px 5px 5px;
-        }
-        
-        .form-control {
-            border: 1px solid #AAAAAA;
-        }
-        
-        .graf-panel {
-            flex: 1;
-            margin: 5px;
-        }
-        
-        .graf-panel .graf-kontainer {
-            height: 460px;
-            background-color: rgba(0, 0, 0, .25);
-            border: 1px solid white;
-            box-shadow: 0px 2px 5px black;
-            padding: 4px;
-            margin-bottom: 8px;
-            display: flex;
-        }
-        
-        .graf-panel .graf-kontainer:first-child {
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-        }
-        
-        .graf-panel .graf-kontainer:last-child {
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
-        
-        .graf-panel .graf-kontainer .graf {
-            flex: 1;
-        }
-        
-        .graf-panel .graf-kontainer .graf img {
-            width: 100%;
-            height: 100%;
-        }
-        
-        .graf-panel .graf-kontainer .pareto {
-            flex: 0 161px;
-            margin-left: 4px;
-            border-left: 1px solid white;
-        }
-        
-        .jstree-default-dark {
-            background: transparent;
-        }
-        
-        .jstree-default-dark .jstree-wholerow-hovered {
-            border: 1px solid white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .jstree-default-dark.jstree-checkbox-no-clicked>.jstree-wholerow-ul .jstree-wholerow-clicked.jstree-wholerow-hovered {
-            border: 1px solid white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .jstree-default-dark.jstree-checkbox-no-clicked .jstree-clicked.jstree-hovered {
-            background: transparent;
-        }
-        
-        .searchBtn {
-            margin-left: 10px;
-            opacity: 1.0;
-            background: transparent;
-            border: 1px solid white;
-            color: white;
-        }
-
-        .searchBtn:hover,
-        .searchBtn:focus {
-            color: white;
-            border: 1px solid white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .searchBtn:active {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .collapseBtn {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 33px;
-            float: right;
-            /*color: #b9b9b9;*/
-            color: white;
-            margin-right: -50px;
-            margin-bottom: 0 !important;
-            background-color: rgba(0, 0, 0, .25);
-            border: 1px solid white;
-            border-left: 0;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-            margin-top: -1px;
-            cursor: pointer;
-        }
-        
-        .daterangepicker {
-            background-color: #27556d;
-            border: 1px solid white;
-        }
-        
-        .daterangepicker .btn {
-            opacity: 1;
-            border-width: 1px;
-            border-style: solid;
-            font-weight: normal;
-        }
-        
-        .daterangepicker .applyBtn {
-            border-color: #05AE0E;
-            background-color: rgba(0, 255, 0, .19);
-            color: white;
-        }
-        
-        .daterangepicker .applyBtn:hover,
-        .daterangepicker .applyBtn:focus,
-        .daterangepicker .applyBtn:active {
-            background-color: rgba(0, 255, 0, .30);
-        }
-        
-        .daterangepicker .cancelBtn {
-            border-color: darkred;
-            background-color: rgba(255, 0, 0, .19);
-            color: white;
-        }
-        
-        .daterangepicker .cancelBtn:hover,
-        .daterangepicker .cancelBtn:focus,
-        .daterangepicker .cancelBtn:active {
-            background-color: rgba(255, 0, 0, .30);
-        }
-        
-        .ranges li,
-        .daterangepicker .input-mini {
-            background-color: rgba(0, 0, 0, 0);
-            border: 1px solid white;
-            color: white;
-            opacity: 1;
-        }
-        
-        .ranges li:hover {
-            border: 1px solid white;
-        }
-        
-        .daterangepicker .input-mini.active {
-            border: 1px solid white;
-            color: white;
-            background-color: rgba(255, 255, 255, 0.25);
-        }
-        
-        .daterangepicker select.hourselect,
-        .daterangepicker select.minuteselect,
-        .daterangepicker select.secondselect,
-        .daterangepicker select.ampmselect {
-            background-color: rgba(0, 0, 0, 0);
-            border: 1px solid white;
-            color: white;
-        }
-        
-        .daterangepicker .calendar-table {
-            background-color: transparent;
-            border: 1px solid white;
-            color: white;
-        }
-        
-        .daterangepicker td.off,
-        .daterangepicker td.off.in-range,
-        .daterangepicker td.off.start-date,
-        .daterangepicker td.off.end-date {
-            background-color: rgba(255, 255, 255, 0.25);
-            border-radius: 0;
-            border-color: transparent;
-            color: #999;
-        }
-        
-        .daterangepicker .daterangepicker_input i {
-            opacity: 0.9;
-            color: white;
-        }
-        
-        .jstree-default-dark .jstree-anchor {
-            color: #d0d0d0;
-        }
-        
-        .checkbox label {
-            padding-left: 10px;
-            color: white;
-            font-size: medium;
-            font-weight: bold;
-        }
-        
-        .checkbox label .toggle,
-        .checkbox-inline .toggle {
-            margin-left: 15px;
-            color: white;
-            border: 1px solid white;
-        }
-        
-        .toggle.btn {
-            opacity: 1;
-            min-width: 75px;
-            min-height: 42px;
-        }
-        
-        .toggle-on.btn,
-        .toggle-off.btn {
-            opacity: 1;
-            color: white;
-        }
-        
-        .toggle-on.btn {
-            background: rgba(0, 128, 0, .50);
-        }
-        
-        .toggle-off.btn {
-            background: rgba(255, 0, 0, .50);
-        }
-        
-        .toggle-on.btn:hover,
-        .toggle-off.btn:hover {
-            color: white;
-        }
-        
-        .toggle-off.btn:hover {
-            background: rgba(255, 0, 0, .60);
-        }
-        
-        .toggle-off.btn:active {
-            background: rgba(255, 0, 0, 1);
-        }
-        
-        .toggle-on.btn:hover {
-            background: rgba(0, 128, 0, .80);
-        }
-        
-        .toggle-on.btn:active {
-            background: rgba(0, 128, 0, 1);
-        }
-        
-        .toggle-handle {
-            opacity: 1;
-            border: 1px solid white;
-        }
-        
-        .toggle-handle:hover {
-            border: 1px solid white;
-        }
-
-        g.subplot.xy > rect {
-            fill-opacity: 0 !important;
-        }
-
-        g.hovertext > path {
-            fill: #83cb1e !important;
-            stroke-width: 2px !important;
-            stroke-opacity: 1 !important;
-            stroke: black !important;
-        }
-
-        g.hovertext > text {
-            fill: black !important;
-        }
-
-        g.axistext > path {
-            fill: #ff5221 !important;
-            stroke-width: 2px !important;
-            stroke-opacity: 1 !important;
-            stroke: black !important;
-        }
-
-        g.axistext > text {
-            fill: black !important;
-        }
-
-        .js-plotly-plot .plotly .modebar {
-            background-color: transparent !important;
-        }
-
-        .js-plotly-plot .plotly .main-svg {
-            overflow: overlay !important;
-        }
-    </style>
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/moment.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js" defer></script>
@@ -628,6 +42,10 @@
     <script type="text/javascript" src="js/init.js"></script>
     <script type="text/javascript" src="js/sidebar.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+
+<script>
+  window.alert(window.devicePixelRatio);
+</script>
 </head>
 
 <body>
@@ -647,10 +65,21 @@
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li id="cycleTimeBtn" class="navbarBtn" data-type="tcy"><a href="#">Čas cyklu</a></li>
-                            <li class="navbarBtn" data-type="cnv"><a href="#">Dopravníky</a></li>
-                            <li class="navbarBtn" data-type="par"><a href="#">Pareto</a></li>
-                            <li class="navbarBtn" data-type="tab"><a href="#">Zastavenia</a></li>
+                            <li class="navbarBtn" data-type="op">
+                                <a href="#">Čakanie na operátora</a>
+                            </li>
+                            <li id="cycleTimeBtn" class="navbarBtn" data-type="tcy">
+                                <a href="#">Čas cyklu</a>
+                            </li>
+                            <li class="navbarBtn" data-type="cnv">
+                                <a href="#">Dopravníky</a>
+                            </li>
+                            <li class="navbarBtn" data-type="par">
+                                <a href="#">Pareto</a>
+                            </li>
+                            <li class="navbarBtn" data-type="tab">
+                                <a href="#">Zastavenia</a>
+                            </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
@@ -684,15 +113,18 @@
                             <div class="tab-pane active" id="rawTab" role="tabpanel">
                                 <div class="input-group double-input">
                                     <span class="input-group-btn">
-                                <button id="timeRngBtn" class="btn" type="button">
-                                    <i class="glyphicon glyphicon-calendar"></i>
-                                </button>
-                            </span>
+                                        <button id="timeRngBtn" class="btn" type="button">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
                                     <input id="rawStartTime" class="form-control myDatePicker multiDatePicker" type="text" placeholder="Dátum od" disabled/>
                                     <input id="rawEndTime" class="form-control myDatePicker multiDatePicker" type="text" placeholder="Dátum do" disabled/>
                                 </div>
                                 <div class="checkbox charakterizovane" style="display: none;">
-                                    <label>Charakterizované:<input id="raw_toggle" type="checkbox" data-toggle="toggle" data-on="Áno" data-off="Nie"></label>
+                                    <label><span>Charakterizované:</span>
+                                        <input id="raw_toggle" type="checkbox" data-toggle="toggle" data-on="Áno"
+                                            data-off="Nie">
+                                    </label>
                                 </div>
                                 <button id="rawSearchBtn" class="btn searchBtn">Vyhľadať</button>
                                 <!--<input class="tcyPicker" type="text" value="" />-->
@@ -700,51 +132,62 @@
                             <div class="tab-pane" id="shiftTab" role="tabpanel">
                                 <div class="input-group">
                                     <span class="input-group-btn">
-                                <button class="btn singleTimeBtn" type="button">
-                                    <i class="glyphicon glyphicon-calendar"></i>
-                                </button>
-                            </span>
+                                        <button class="btn singleTimeBtn" type="button">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
                                     <input id="shiftStartTime" class="form-control myDatePicker singleDatePicker" type="text" placeholder="Dátum" disabled/>
                                 </div>
                                 <div style="display: block;float: left;margin-left: 10px;padding-left: 5px; padding: 7px 20px 0px 0px;font-weight: bold; color: white; opacity: 1;">Zmena: </div>
                                 <select id="shiftSelect" class="selectpicker show-tick">
-                            <option value='ranna'>Ranná</option>
-                            <option value='poobedna'>Poobedná</option>
-                            <option value='nocna'>Nočná</option>
-                        </select>
+                                    <option value='ranna'>Ranná</option>
+                                    <option value='poobedna'>Poobedná</option>
+                                    <option value='nocna'>Nočná</option>
+                                </select>
                                 <!--<input class="tcyPicker" type="text" value="" />-->
                                 <div class="checkbox charakterizovane" style="display: none;">
-                                    <label>Charakterizované:<input id="shift_toggle" type="checkbox" data-toggle="toggle" data-on="Áno" data-off="Nie"></label>
+                                    <label><span>Charakterizované:</span>
+                                        <input id="shift_toggle" type="checkbox" data-toggle="toggle" data-on="Áno"
+                                            data-off="Nie">
+                                    </label>
                                 </div>
                                 <button id="shiftSearchBtn" class="btn searchBtn">Vyhľadať</button>
                             </div>
                             <div class="tab-pane" id="dayTab" role="tabpanel">
                                 <div class="input-group">
                                     <span class="input-group-btn">
-                                <button class="btn singleTimeBtn" type="button">
-                                    <i class="glyphicon glyphicon-calendar"></i>
-                                </button>
-                            </span>
+                                        <button class="btn singleTimeBtn" type="button">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
                                     <input id="dayStartTime" class="form-control myDatePicker singleDatePicker" type="text" placeholder="Dátum" disabled/>
                                 </div>
                                 <!--<input class="tcyPicker" type="text" value="" />-->
                                 <div class="checkbox charakterizovane" style="display: none;">
-                                    <label>Charakterizované:<input id="day_toggle" type="checkbox" data-toggle="toggle" data-on="Áno" data-off="Nie"></label>
+                                    <label><span>Charakterizované:</span>
+                                        <input id="day_toggle" type="checkbox" data-toggle="toggle" data-on="Áno"
+                                            data-off="Nie">
+                                    </label>
                                 </div>
                                 <button id="daySearchBtn" class="btn searchBtn">Vyhľadať</button>
                             </div>
                             <div class="tab-pane" id="weekTab" role="tabpanel">
                                 <div class="input-group">
                                     <span class="input-group-btn">
-                                <button class="btn singleTimeBtn" type="button">
-                                    <i class="glyphicon glyphicon-calendar"></i>
-                                </button>
-                            </span>
+                                        <button class="btn singleTimeBtn" type="button">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
                                     <input id="weekStartTime" class="form-control myDatePicker singleDatePicker" type="text" placeholder="Dátum" disabled/>
                                 </div>
-                                <p style="margin-left: 10px;font-weight: bold;padding: 5px 0; color: white; opacity: 1;">Týždeň: <span id="tyzdenNum"></span></p>
+                                <p style="margin-left: 10px;font-weight: bold;padding: 5px 0; color: white; opacity: 1;">Týždeň:
+                                    <span id="tyzdenNum"></span>
+                                </p>
                                 <div class="checkbox charakterizovane" style="display: none;">
-                                    <label>Charakterizované:<input id="week_toggle" type="checkbox" data-toggle="toggle" data-on="Áno" data-off="Nie"></label>
+                                    <label><span>Charakterizované:</span>
+                                        <input id="week_toggle" type="checkbox" data-toggle="toggle" data-on="Áno"
+                                            data-off="Nie">
+                                    </label>
                                 </div>
                                 <button id="weekSearchBtn" class="btn searchBtn">Vyhľadať</button>
                                 <!--<input class="tcyPicker" type="text" value="" />-->
