@@ -33,7 +33,7 @@ class Database
                 $this->_connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             }
         } catch (PDOException $e) {
-            die("Pripojenie na databázu zlyhalo na chybe: " . $e->getMessage());
+            die("Pripojenie na databázu zlyhalo na chybe: " . $e->getMessage()."<br/>".$e->getTraceAsString());
         }
 
         return $this->_connection;
